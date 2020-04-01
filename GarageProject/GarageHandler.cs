@@ -21,15 +21,16 @@ namespace Garage_1
 
         public static Boolean AddVehicle( Vehicle vehicle)
         {
-            return garage.AddVehicle(vehicle);
+            return garage?.AddVehicle(vehicle)??false;
         }
 
         public static Boolean RemoveVehicle(string regNr)
         {
-            return garage.RemoveVehicle(regNr);
+            return garage?.RemoveVehicle(regNr)??false;
         }
 
-        public static string ListVehicles(Boolean onlyParked = true) => 
+        public static string ListVehicles(Boolean onlyParked = true) =>
+            (garage is null)?"":
             string.Join("\n", garage
                 .Where(item => item?.IsParked ?? false == onlyParked)
                 .ToList()
@@ -39,7 +40,7 @@ namespace Garage_1
         public static Vehicle GetVehicle(string search)
         { 
 
-            return garage.GetVehicle(search);
+            return garage?.GetVehicle(search)??null;
             //throw new NotImplementedException();
         }
 
@@ -48,7 +49,8 @@ namespace Garage_1
 
         internal static string StatsVehiclesInGarage()
         {
-            var result_list = garage
+            if (garage is null) return "";
+           var result_list = garage
                 .Where(v => v != null && v.IsParked )
                 .GroupBy(v => v.Type)
                 .Select(group => new {
@@ -61,8 +63,6 @@ namespace Garage_1
 
         internal static Vehicle BuildVehicle(string type)
         {
-
-
             Console.Write("Specify reg.nr of Vehicle: ");
             var regNr = Console.ReadLine();
 
@@ -101,10 +101,6 @@ namespace Garage_1
             //{
             //    return (data.GetType().GetProperties().Where(x => x.PropertyType == typeof(string)).FirstOrDefault() != null);
             //}
-
-
-
-
 
         }
     }
