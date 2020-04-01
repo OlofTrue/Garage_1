@@ -8,13 +8,13 @@ namespace Garage_1
     public class Util
     {
         #pragma warning disable IDE0059, IDE0060
-        public static int InputPositivInt(string Ask)
+        public static int InputPositivInt(string askInput)
         {
             var num = -1;
             do
             {
                 Console.Clear();
-                Console.Write(@"{Ask} ");
+                Console.Write($"{askInput} ");
                 num = int.TryParse(Console.ReadLine(), out num) ? num : -1;
             } while (num<0);
             return num;

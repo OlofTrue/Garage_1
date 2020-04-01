@@ -47,18 +47,18 @@ namespace Garage_1
         public Boolean RemoveVehicle(string regNr)
         {
             if (occupancy==0) return false;
-            int inx = FindVehicle_Inx(regNr);
+            int inx = GetVehicle_Inx(regNr);
             Util.RemoveAt(ref vehicles, inx);
             return true;
         }
 
-        public Vehicle FindVehicle(string regNr)
+        public Vehicle GetVehicle(string regNr)
         {
-            int inx= FindVehicle_Inx(regNr);
+            int inx= GetVehicle_Inx(regNr);
             return (inx < vehicles.Length)? vehicles[inx] :null;
         }
 
-        private int FindVehicle_Inx(string regNr)
+        private int GetVehicle_Inx(string regNr)
         {
             int i;
             for (i = 0; i < vehicles.Length; i++)

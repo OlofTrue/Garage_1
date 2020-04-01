@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace Garage_1
 {
@@ -22,19 +23,21 @@ namespace Garage_1
             return garage.RemoveVehicle(regNr);
         }
 
-        public static void ListParkedVehicles(Garage<Vehicle> garage)
+        public static string ListVehicles(Garage<Vehicle> garage, Boolean onlyParked = true, Boolean byType = false)
         {
-            throw new NotImplementedException();
+            var g_list= garage
+                .Where(item => item?.IsParked ?? false)
+                .ToList();
+                //.ForEach(i => i.ToString());
+
+            return string.Join("\n", g_list.Select(i => i.ToString())); //.ToArray()
         }
 
-        public static void ListParkedVehiclesByType(Garage<Vehicle> garage)
-        {
-            throw new NotImplementedException();
-        }
 
-        public static Vehicle FindVehicle(Garage<Vehicle> garage,string search)
+        public static Vehicle GetVehicle(Garage<Vehicle> garage, string search)
         {
-            return garage.FindVehicle(search);
+
+            return garage.GetVehicle(search);
             //throw new NotImplementedException();
         }
 
