@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("UnitTestGarage")]
+//[assembly: InternalsVisibleTo("UnitTestGarage")]
 namespace Garage_1
 {
     public class Garage<T> : IEnumerable<T> where T : Vehicle
@@ -20,7 +20,7 @@ namespace Garage_1
 
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        internal T[] vehicles; //private
+        private T[] vehicles; //internal
         private int occupancy;
 
         public Garage(int cap)

@@ -19,22 +19,44 @@ namespace Garage_1
             Console.Clear();
             Console.WriteLine("Garage manager\n"
                 + "\n1. Examine garage"
-                + "\n2. Add Vehicle"
-                + "\n3. aaaa"
+                + "\n2. Statistics garage"
+                + "\n3. Add Vehicle"
+                + "\n4. Remove Vehicle"
+                + "\n5. aaaa"
                 + "\n9. Import some veicle"
                 + "\n0. Exit the application");
             Console.Write("\r\nSelect an option: ");
             var actionMeny = new Dictionary<string, Action>()
             {
                 {"D1", PrintGarage },
-                {"D2", AddVehicle },
-                {"D3", Foo },
+                {"D2", PrintGarageStat },
+                {"D3", AddVehicle },
+                {"D4", RemoveVehicle },
+                {"D5", Foo },
                 {"D9", ImportVehicles },
                 {"D0", ()=>{Environment.Exit(0); } }
             };
             var strMenu =Console.ReadKey(intercept: true).Key.ToString();
             if (actionMeny.ContainsKey(strMenu)) actionMeny[strMenu]?.Invoke();
             return true;
+        }
+
+        private static void RemoveVehicle()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void PrintGarageStat()
+        {
+            Console.Clear();
+            Console.WriteLine("------------ Garage ------------");
+            Console.WriteLine();
+            Console.WriteLine($"{GarageHandler.StatsVehicles(theGarage)}");
+            Console.WriteLine();
+            Console.WriteLine("------------ Garage ------------");
+            Console.WriteLine();
+            Console.WriteLine("Press any key to return: ");
+            Console.ReadLine();
         }
 
         static void PrintGarage()
@@ -61,7 +83,10 @@ namespace Garage_1
                         {
                    new Car {RegNr="ABC11",Color="Red",NoWheels=4},
                    new Car {RegNr="ABC222",Color="White",NoWheels=4},
-                   new Car {RegNr="ABC333",Color="Grey",NoWheels=4}
+                   new Car {RegNr="ABC333",Color="Grey",NoWheels=4},
+                   new Car {RegNr="ABC444",Color="Grey",NoWheels=4},
+                   new Boat {RegNr="B-111",Color="Grey",NoWheels=0},
+                   new Boat {RegNr="B-222",Color="Blue",NoWheels=0}
                         };
             foreach (var car in testCars)
             {

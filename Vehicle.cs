@@ -1,19 +1,23 @@
 ﻿using System;
 using System.Collections;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Text;
+
 
 namespace Garage_1
 {
     public abstract class Vehicle
     {
+        [Display(Order = 1)]
         public string RegNr { get; set; }
         public string Color { get; set; }
         public virtual int NoWheels { get; set; }
         public Boolean IsParked { get; set; }
-
         public override string ToString()
         {
             var result = new StringBuilder();
+
             foreach (var prop in this.GetType().GetProperties())
             {
                 result.Append(prop.Name + "=");

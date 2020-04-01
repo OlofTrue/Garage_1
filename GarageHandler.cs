@@ -23,15 +23,12 @@ namespace Garage_1
             return garage.RemoveVehicle(regNr);
         }
 
-        public static string ListVehicles(Garage<Vehicle> garage, Boolean onlyParked = true, Boolean byType = false)
-        {
-            var g_list= garage
+        public static string ListVehicles(Garage<Vehicle> garage, Boolean onlyParked = true) => 
+            string.Join("\n", garage
                 .Where(item => item?.IsParked ?? false)
-                .ToList();
-                //.ForEach(i => i.ToString());
-
-            return string.Join("\n", g_list.Select(i => i.ToString())); //.ToArray()
-        }
+                .ToList()
+                .Select(i => i.ToString()));
+      
 
 
         public static Vehicle GetVehicle(Garage<Vehicle> garage, string search)
@@ -43,5 +40,10 @@ namespace Garage_1
 
         public static void Park(Vehicle vehicle) => vehicle.IsParked = true;
         public static void UnPark(Vehicle vehicle) => vehicle.IsParked = false;
+
+        internal static object StatsVehicles(Garage<Vehicle> theGarage)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
