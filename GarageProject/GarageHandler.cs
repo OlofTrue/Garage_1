@@ -28,8 +28,6 @@ namespace Garage_1
                 .Where(item => item?.IsParked ?? false)
                 .ToList()
                 .Select(i => i.ToString()));
-      
-
 
         public static Vehicle GetVehicle(Garage<Vehicle> garage, string search)
         {
@@ -41,9 +39,17 @@ namespace Garage_1
         public static void Park(Vehicle vehicle) => vehicle.IsParked = true;
         public static void UnPark(Vehicle vehicle) => vehicle.IsParked = false;
 
-        internal static object StatsVehicles(Garage<Vehicle> theGarage)
+        internal static string StatsVehicles(Garage<Vehicle> garage)
         {
-            throw new NotImplementedException();
+            var result_list = garage
+                .Where(v => v != null && v.IsParked )
+                .GroupBy(v => v.Type)
+                .Select(group => new {
+                    Type = group.Key,
+                    Count = group.Count()
+                })
+                .ToList();
+            return string.Join("\n", result_list);
         }
     }
 }

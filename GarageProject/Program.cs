@@ -49,11 +49,11 @@ namespace Garage_1
         private static void PrintGarageStat()
         {
             Console.Clear();
-            Console.WriteLine("------------ Garage ------------");
+            Console.WriteLine("------------ Garage stat ------------");
             Console.WriteLine();
             Console.WriteLine($"{GarageHandler.StatsVehicles(theGarage)}");
             Console.WriteLine();
-            Console.WriteLine("------------ Garage ------------");
+            Console.WriteLine("------------ Garage stat ------------");
             Console.WriteLine();
             Console.WriteLine("Press any key to return: ");
             Console.ReadLine();
@@ -62,11 +62,11 @@ namespace Garage_1
         static void PrintGarage()
         {
             Console.Clear();
-            Console.WriteLine("------------ Garage ------------");
+            Console.WriteLine("------------ Garage inv ------------");
             Console.WriteLine();
             Console.WriteLine($"{GarageHandler.ListVehicles(theGarage)}");
             Console.WriteLine();
-            Console.WriteLine("------------ Garage ------------");
+            Console.WriteLine("------------ Garage inv ------------");
             Console.WriteLine();
             Console.WriteLine("Press any key to return: ");
             Console.ReadLine();

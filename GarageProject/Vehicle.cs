@@ -14,6 +14,7 @@ namespace Garage_1
         public string Color { get; set; }
         public virtual int NoWheels { get; set; }
         public Boolean IsParked { get; set; }
+        public string Type => this.GetType().Name;
         public override string ToString()
         {
             var result = new StringBuilder();
