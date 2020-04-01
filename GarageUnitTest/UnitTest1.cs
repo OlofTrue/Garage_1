@@ -31,14 +31,15 @@ namespace GarageUnitTest
         public void GarageAddVehicle_WithVehicles_ReturnOccupancy(int cap, int len)
         {
             //Arrange
-            var garage = GarageHandler.SetUpGarage(cap);
+            var garage=GarageHandler.GetGarageCopyForTest(cap);
             var cars = CreateVehicles(len);
+            var expected = Math.Min(cars.Length, cap);
 
             //Act
             foreach (var car in cars) garage.AddVehicle(car);
 
             //Assert
-            Assert.AreEqual(Math.Min(cars.Length, cap), garage.Occupancy);
+            Assert.AreEqual(expected, garage.Occupancy);
 
         }
 
@@ -73,7 +74,7 @@ namespace GarageUnitTest
         public void GarageAddVehicle_WithVehicles_ReturnIsFull(int cap, int len)
         {
             //Arrange
-            var garage = GarageHandler.SetUpGarage(cap);
+            var garage = GarageHandler.GetGarageCopyForTest(cap);
             var cars = CreateVehicles(len);
 
             //Act
@@ -94,14 +95,33 @@ namespace GarageUnitTest
         public void GarageCreateArray_WithCapacity_ReturnsCapacity(int init, int expected)
         {
             //Arrange
-            //var arr = new Garage<Vehicle>(init);
-            var garage = GarageHandler.SetUpGarage(init);
+            var garage = GarageHandler.GetGarageCopyForTest(init);
 
             //Act
             var actual = garage.Capacity;
 
             //Assert
             Assert.AreEqual(expected, actual);
+        }
+
+
+        [TestMethod]
+        [DataRow(3, 2)]
+        [DataRow(3, 3)]
+        [DataRow(3, 4)]
+        public void GarageRemoveVehicle_ReturnOccupancy(int cap, int len)
+        {
+            //Arrange
+            var garage = GarageHandler.GetGarageCopyForTest(cap);
+            var cars = CreateVehicles(len);
+            var expected = Math.Min(cap - len, 0);
+
+            //Act
+            foreach (var car in cars) garage.RemoveVehicle(car.RegNr);
+
+            //Assert
+            Assert.AreEqual(expected, garage.Occupancy);
+
         }
 
     }

@@ -9,7 +9,14 @@ namespace Garage_1
 {
     public abstract class Vehicle
     {
-        [Display(Order = 1)]
+        //public Vehicle(string regNr, string color)
+        //{
+        //    RegNr = regNr;
+        //    Color = color
+        //}
+        internal IList GetVehicleProperties => this.GetType().GetProperties().ToList();
+
+        //[Display(Order = 1)]
         public string RegNr { get; set; }
         public string Color { get; set; }
         public virtual int NoWheels { get; set; }
@@ -18,7 +25,6 @@ namespace Garage_1
         public override string ToString()
         {
             var result = new StringBuilder();
-
             foreach (var prop in this.GetType().GetProperties())
             {
                 result.Append(prop.Name + "=");
@@ -40,6 +46,10 @@ namespace Garage_1
 
     public class Car : Vehicle
     {
+        //public Car(string regNr, string color) : base(regNr, color)
+        //{
+
+        //}
         public override int NoWheels { get; set; } = 4;
     }
 
@@ -51,6 +61,10 @@ namespace Garage_1
 
     public class Boat : Vehicle
     {
+        //public Boat(string regNr, string color,int NoEngines, float Lenght) : base( regNr,  color)
+        //{
+
+        //}
         public override int NoWheels { get; set; } = 0;
         public int NoEngines { get; set; } = 1;
         public float Lenght { get; set; }

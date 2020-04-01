@@ -7,18 +7,18 @@ namespace Garage_1
 
     public class Util
     {
-        #pragma warning disable IDE0059, IDE0060
-        public static int InputPositivInt(string askInput)
-        {
-            var num = -1;
-            do
-            {
-                Console.Clear();
-                Console.Write($"{askInput} ");
-                num = int.TryParse(Console.ReadLine(), out num) ? num : -1;
-            } while (num<0);
-            return num;
-        }
+        //#pragma warning disable IDE0059, IDE0060
+        //public static int InputPositivInt(string askInput)
+        //{
+        //    var num = -1;
+        //    do
+        //    {
+        //        Console.Clear();
+        //        Console.Write($"{askInput} ");
+        //        num = int.TryParse(Console.ReadLine(), out num) ? num : -1;
+        //    } while (num<0);
+        //    return num;
+        //}
 
         public static void RemoveAt<T>(ref T[] arr, int index)
         {
