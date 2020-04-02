@@ -8,7 +8,7 @@ namespace Garage_1
 {
     public class Garage<T> : IEnumerable<T> where T : Vehicle
     {
-        public const int MAX_CAPACITY = 25;
+        public const int MAX_CAPACITY = 2500;
 
         public IEnumerator<T> GetEnumerator()
         {

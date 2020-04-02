@@ -66,8 +66,8 @@ namespace Garage_1
             Util.MsgBox("Vehicle removal", str);
         }
         private static void PrintGarageStat() => 
-            Util.MsgBox("Garage stat", string.Format($"{GarageHandler.StatsVehiclesInGarage()}\n\n{GarageHandler.ListGarageCapacity()}"));
-        static void PrintGarage() => Util.MsgBox("Garage inv", string.Format($"{GarageHandler.ListVehicles()}"));
+            Util.MsgBox("Garage stat", GarageHandler.StatsVehiclesInGarage()+"\n\n" + GarageHandler.ListGarageCapacity());
+        static void PrintGarage() => Util.MsgBox("Garage inv", GarageHandler.ListVehicles());
        
         static void  AddVehicle()
         {

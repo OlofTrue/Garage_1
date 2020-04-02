@@ -36,11 +36,14 @@ namespace Garage_1
 
         public static string ListVehicles(string regNr = "", Boolean onlyParked = true) =>
             (garage is null) ? "" :
-            string.Join("\n", garage
-                .Where(item => (string.IsNullOrEmpty(regNr) ? item?.RegNr == regNr : true)
-                            && (item?.IsParked ?? false == onlyParked))
-                .ToList()
-                .Select(i => i.ToString()));
+                string.Join("\n", garage
+                    .Where(item => (item is null) ? false :
+                        string.IsNullOrEmpty(regNr) ?
+                        item?.IsParked == onlyParked
+                        : item?.RegNr == regNr
+                    )
+                    .ToList()
+    .Select(i => i.ToString()));
 
         public static string ListGarageCapacity()
         {
