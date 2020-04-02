@@ -55,7 +55,7 @@ namespace Garage_1
         public Vehicle GetVehicle(string regNr)
         {
             int inx= GetVehicle_Inx(regNr);
-            return (inx < vehicles.Length)? vehicles[inx] :null;
+            return (inx >=0 && inx < vehicles.Length)? vehicles[inx] :null;
         }
 
         private int GetVehicle_Inx(string regNr)
@@ -63,7 +63,7 @@ namespace Garage_1
             int i;
             for (i = 0; i < vehicles.Length; i++)
             {
-                if (regNr == vehicles[i].RegNr) break;
+                if (regNr == vehicles[i]?.RegNr) break;
             }
             return (i < vehicles.Length) ? i : -1;
         }

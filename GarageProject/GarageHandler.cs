@@ -11,7 +11,8 @@ namespace Garage_1
 
         public static void SetUpGarage(int cap)
         {
-            garage= new Garage<Vehicle>(cap);
+            garage = null;
+            garage = new Garage<Vehicle>(cap);
         }
 
         public static Garage<Vehicle> GetGarageCopyForTest(int cap)
@@ -21,7 +22,10 @@ namespace Garage_1
 
         public static Boolean AddVehicle( Vehicle vehicle)
         {
-            return garage?.AddVehicle(vehicle)??false;
+            var success = false;
+            if (garage?.GetVehicle(vehicle.RegNr)==null)
+               success= garage?.AddVehicle(vehicle)??false;
+            return success;
         }
 
         public static Boolean RemoveVehicle(string regNr)
@@ -29,19 +33,24 @@ namespace Garage_1
             return garage?.RemoveVehicle(regNr)??false;
         }
 
-        public static string ListVehicles(Boolean onlyParked = true) =>
-            (garage is null)?"":
+        public static string ListVehicles(string regNr = "", Boolean onlyParked = true) =>
+            (garage is null) ? "" :
             string.Join("\n", garage
-                .Where(item => item?.IsParked ?? false == onlyParked)
+                .Where(item => (regNr.Length > 0 ? item?.RegNr == regNr : true)
+                            && (item?.IsParked ?? false == onlyParked))
                 .ToList()
-                .Select(i => i.ToString())) 
-                    + "\n\n Capacity: " + garage.Count().ToString()
-                     + "\n\n ( Maxcapacity: " + Garage<Vehicle>.MAX_CAPACITY.ToString() +" )";
-        public static Vehicle GetVehicle(string search)
-        { 
+                .Select(i => i.ToString()));
+                    
+        public static string ListGarageCapacity()
+        {
+           return "Capacity: " + garage.Count().ToString()
+                     + "\n\nMaxcapacity: " + Garage<Vehicle>.MAX_CAPACITY.ToString();
+        }
 
-            return garage?.GetVehicle(search)??null;
-            //throw new NotImplementedException();
+        public static string ListVehicle(string search)
+        { 
+            var vehicle= garage?.GetVehicle(search)??null;
+            return ListVehicles(vehicle?.RegNr);
         }
 
         public static void Park(Vehicle vehicle) => vehicle.IsParked = true;

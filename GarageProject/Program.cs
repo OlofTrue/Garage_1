@@ -36,12 +36,36 @@ namespace Garage_1
                 {"D3", AddVehicle },
                 {"D4", RemoveVehicle },
                 {"D5", CreateGarage },
+                {"D6", FindVehicleByRegNr },
+                {"D7", FindVehicle },
                 {"D9", ImportVehicles },
                 {"D0", ()=>{Environment.Exit(0); } }
             };
             var strMenu =Console.ReadKey(intercept: true).Key.ToString();
             if (actionMeny.ContainsKey(strMenu)) actionMeny[strMenu]?.Invoke();
             return true;
+        }
+
+        private static void FindVehicle()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void FindVehicleByRegNr()
+        {
+            Console.Clear();
+            Console.Write("Specify reg.nr of Vehicle: ");
+            var regNr = Console.ReadLine();
+
+            Console.Clear();
+            Console.WriteLine("------------ Find vehicle by regNr ------------");
+            Console.WriteLine();
+            Console.WriteLine($"{GarageHandler.ListVehicle(regNr)}");
+            Console.WriteLine();
+            Console.WriteLine("------------ Find vehicle by regNr ------------");
+            Console.WriteLine();
+            Console.WriteLine("Press any key to return: ");
+            Console.ReadLine();
         }
 
         private static void RemoveVehicle()
@@ -69,7 +93,7 @@ namespace Garage_1
             Console.Clear();
             Console.WriteLine("------------ Garage stat ------------");
             Console.WriteLine();
-            Console.WriteLine($"{GarageHandler.StatsVehiclesInGarage()}");
+            Console.WriteLine($"{GarageHandler.StatsVehiclesInGarage()}\n\n{GarageHandler.ListGarageCapacity()}");
             Console.WriteLine();
             Console.WriteLine("------------ Garage stat ------------");
             Console.WriteLine();
