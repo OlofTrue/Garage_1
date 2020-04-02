@@ -49,6 +49,7 @@ namespace Garage_1
             if (occupancy==0) return false;
             int inx = GetVehicle_Inx(regNr);
             Util.RemoveAt(ref vehicles, inx);
+            occupancy--;
             return true;
         }
 

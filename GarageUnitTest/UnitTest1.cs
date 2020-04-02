@@ -113,11 +113,13 @@ namespace GarageUnitTest
         {
             //Arrange
             var garage = GarageHandler.GetGarageCopyForTest(cap);
-            var cars = CreateVehicles(len);
-            var expected = Math.Min(cap - len, 0);
+            var cars_add = CreateVehicles(cap); //full house
+            var cars_remove = CreateVehicles(len);
+            var expected = Math.Max(cap - len, 0);
 
             //Act
-            foreach (var car in cars) garage.RemoveVehicle(car.RegNr);
+            foreach (var car in cars_add) garage.AddVehicle(car);
+            foreach (var car in cars_remove) garage.RemoveVehicle(car.RegNr);
 
             //Assert
             Assert.AreEqual(expected, garage.Occupancy);
