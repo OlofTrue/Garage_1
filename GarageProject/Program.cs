@@ -121,7 +121,9 @@ namespace Garage_1
             Console.WriteLine();
             Console.Write("Specify type of Vehicle: ");
             var type = Console.ReadLine();
-            Vehicle vehicle=GarageHandler.BuildVehicle(type);
+            //Console.Write("Specify reg.nr of Vehicle: ");
+            //var regNr = Console.ReadLine();
+            Vehicle vehicle = GarageHandler.BuildVehicle(type); //, regNr);
 
             Console.WriteLine("------------ Add Vehicle ------------");
             Console.WriteLine();
@@ -146,7 +148,7 @@ namespace Garage_1
             GarageHandler.SetUpGarage(cap);
             Console.WriteLine("------------ Garage inv ------------");
             Console.WriteLine();
-            Console.WriteLine($"{GarageHandler.ListVehicles()}");
+            Console.WriteLine($"{GarageHandler.ListVehicles()}\n\n{GarageHandler.ListGarageCapacity()}");
             Console.WriteLine();
             Console.WriteLine("------------ Garage inv ------------");
             Console.WriteLine();

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using System.Reflection;
 
 namespace Garage_1
 {
@@ -70,24 +71,45 @@ namespace Garage_1
             return string.Join("\n", result_list);
         }
 
-        internal static Vehicle BuildVehicle(string type)
+        internal static Vehicle BuildVehicle(string type) //,string regNr
         {
-            Console.Write("Specify reg.nr of Vehicle: ");
-            var regNr = Console.ReadLine();
-
-            Console.Write("Specify color of Vehicle: ");
-            var color = Console.ReadLine();
-
+            Vehicle vehicle = null;
             switch (type)
             {
-                case "Car": return  new Car() { RegNr = regNr, Color = color };
-
-                case "Boat": return new Boat() { RegNr = regNr, Color = color };
-
+                case "Car": vehicle= new Car();
+                    break;
+                case "Boat": vehicle = new Boat();
+                    break;
                 default:
                     break;
             }
-            return null;
+
+
+            foreach (var p in vehicle.GetVehicleProperties())
+            {
+                var nameP = (string)p?.GetType().GetProperty("NameP")?.GetValue(p, null);
+                if (nameP == "Type") continue;
+
+                var typeP =(string) p?.GetType().GetProperty("TypeP")?.GetValue(p, null);
+
+                //if (nameP=="RegNr"") strValue=regNr
+                Console.Write($"Specify {nameP}: ");
+                var strValue = Console.ReadLine();
+
+                var obj = vehicle;
+                PropertyInfo prop = obj.GetType().GetProperty(nameP, BindingFlags.Public | BindingFlags.Instance);
+                if (null != prop && prop.CanWrite)
+                {
+                    if (typeP=="Int32") prop.SetValue(obj, Util.ConvInt(strValue), null);
+                    if(typeP == "String") prop.SetValue(obj, strValue, null);
+                    if (typeP == "Single") prop.SetValue(obj, Util.ConvFloat(strValue), null);
+                    if (typeP == "Boolean") prop.SetValue(obj, (strValue=="true" || strValue == "1"), null);
+                }
+            }
+
+
+
+            return vehicle;
             //foreach (var item in vehicle?.GetVehicleProperties)
             //{
             //    Console.Write($"Specify {item}: ");
@@ -112,5 +134,6 @@ namespace Garage_1
             //}
 
         }
+
     }
 }

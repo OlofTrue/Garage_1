@@ -33,6 +33,17 @@ namespace Garage_1
             Array.Clear(arr,a - 1,1);
         }
 
+        public static float ConvFloat(string str)
+        {
+            if (!float.TryParse(str, out float val)) val = 0;
+            return val;
 
+        }
+
+        public static int ConvInt(string str)
+        {
+            if (!int.TryParse(str, out int val)) val = 0;
+            return val;
+        }
     }
 }

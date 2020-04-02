@@ -14,7 +14,30 @@ namespace Garage_1
         //    RegNr = regNr;
         //    Color = color
         //}
-        internal IList GetVehicleProperties => this.GetType().GetProperties().ToList();
+        public IList GetVehicleProperties()
+        {
+            return this.GetType().GetProperties()
+                 .Select(prop => new {
+                     NameP = prop.Name,
+                     TypeP = prop.PropertyType.Name
+                 })
+                 .ToList();
+
+//{
+//    new Item{ Id=1, Name="Ball", Description="Hello" },
+//    new Item{ Id=2, Name="Hat", Description="Test" }
+//}
+
+//            AuthorList.Add(new Author("Mahesh Chand", 35, "A Prorammer's Guide to ADO.NET", true, new DateTime(2003, 7, 10)));
+
+//            foreach (var prop in this.GetType().GetProperties())
+//            {
+//                prop.Name;
+//                prop.PropertyType;
+//                //prop.GetValue(this, null);
+//            }
+        }
+
 
         //[Display(Order = 1)]
         public string RegNr { get; set; }
@@ -69,4 +92,5 @@ namespace Garage_1
         public int NoEngines { get; set; } = 1;
         public float Lenght { get; set; }
     }
+
 }
