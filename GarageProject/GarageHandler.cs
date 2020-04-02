@@ -40,10 +40,9 @@ namespace Garage_1
                     .Where(item => (item is null) ? false :
                         string.IsNullOrEmpty(regNr) ?
                         item?.IsParked == onlyParked
-                        : item?.RegNr == regNr
-                    )
+                        : item?.RegNr == regNr )
                     .ToList()
-    .Select(i => i.ToString()));
+                    .Select(i => i.ToString()));
 
         public static string ListGarageCapacity()
         {
@@ -66,15 +65,10 @@ namespace Garage_1
             var result_list = garage
                  .Where(v => v != null && v.IsParked)
                  .GroupBy(v => v.Type)
-                 .Select(group => new
-                 {
-                     Type = group.Key,
-                     Count = group.Count()
-                 })
+                 .Select(group => new { Type = group.Key,Count = group.Count() })
                  .ToList();
             return string.Join("\n", result_list);
         }
-
  
         public static Vehicle[] GetTestVehicles()
         {
