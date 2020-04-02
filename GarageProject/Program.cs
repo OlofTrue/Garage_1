@@ -48,7 +48,17 @@ namespace Garage_1
 
         private static void FindVehicle()
         {
-            throw new NotImplementedException();
+
+            Console.Clear();
+            Console.WriteLine("------------ Find vehicle ------------");
+            Console.WriteLine();
+            Console.WriteLine("Not implemented");
+            Console.WriteLine();
+            Console.WriteLine("------------ Find vehicle ------------");
+            Console.WriteLine();
+            Console.WriteLine("Press any key to return: ");
+            Console.ReadLine();
+            //throw new NotImplementedException();
         }
 
         private static void FindVehicleByRegNr()
