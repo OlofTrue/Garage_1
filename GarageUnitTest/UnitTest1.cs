@@ -9,16 +9,7 @@ namespace GarageUnitTest
     {
         public Vehicle[] CreateVehicles(int n)
         {
-            var test_cars = new Vehicle[]
-             {
-                   new Car {RegNr="ABC11",Color="Red",NoWheels=4},
-                   new Car {RegNr="ABC222",Color="White",NoWheels=4},
-                   new Car {RegNr="ABC333",Color="Grey",NoWheels=4},
-                   new Car {RegNr="ABC444",Color="Blue",NoWheels=4},
-                   new Boat {RegNr="B-111",Color="Grey",NoWheels=0},
-                   new Boat {RegNr="B-222",Color="Blue",NoWheels=0}
-
-             };
+            var test_cars = GarageHandler.GetTestVehicles();
             Array.Resize(ref test_cars, n);
             return test_cars;
         }
@@ -113,13 +104,13 @@ namespace GarageUnitTest
         {
             //Arrange
             var garage = GarageHandler.GetGarageCopyForTest(cap);
-            var cars_add = CreateVehicles(cap); //full house
-            var cars_remove = CreateVehicles(len);
+            var vehicles_add = CreateVehicles(cap); //full house
+            var vehicles_remove = CreateVehicles(len);
             var expected = Math.Max(cap - len, 0);
 
             //Act
-            foreach (var car in cars_add) garage.AddVehicle(car);
-            foreach (var car in cars_remove) garage.RemoveVehicle(car.RegNr);
+            foreach (var v in vehicles_add) garage.AddVehicle(v);
+            foreach (var v in vehicles_remove) garage.RemoveVehicle(v.RegNr);
 
             //Assert
             Assert.AreEqual(expected, garage.Occupancy);

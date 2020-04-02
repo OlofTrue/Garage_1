@@ -46,154 +46,60 @@ namespace Garage_1
             return true;
         }
 
-        private static void FindVehicle()
-        {
-
-            Console.Clear();
-            Console.WriteLine("------------ Find vehicle ------------");
-            Console.WriteLine();
-            Console.WriteLine("Not implemented");
-            Console.WriteLine();
-            Console.WriteLine("------------ Find vehicle ------------");
-            Console.WriteLine();
-            Console.WriteLine("Press any key to return: ");
-            Console.ReadLine();
-            //throw new NotImplementedException();
-        }
-
+        private static void FindVehicle() =>Util.MsgBox("Find vehicle", "Not implemented");
         private static void FindVehicleByRegNr()
         {
-            Console.Clear();
-            Console.Write("Specify reg.nr of Vehicle: ");
-            var regNr = Console.ReadLine();
-
-            Console.Clear();
-            Console.WriteLine("------------ Find vehicle by regNr ------------");
-            Console.WriteLine();
-            Console.WriteLine($"{GarageHandler.ListVehicle(regNr)}");
-            Console.WriteLine();
-            Console.WriteLine("------------ Find vehicle by regNr ------------");
-            Console.WriteLine();
-            Console.WriteLine("Press any key to return: ");
-            Console.ReadLine();
+            Util.PrintClear();
+            var regNr = Util.Input("Specify reg.nr of Vehicle: ");
+            Util.MsgBox("Find vehicle by regNr",string.Format($"{GarageHandler.ListVehicle(regNr)}"));
         }
 
         private static void RemoveVehicle()
         {
-            Console.Clear();
-            Console.Write("Specify reg.nr of Vehicle: ");
-            var regNr = Console.ReadLine();
-            
-            Console.Clear();
-            Console.WriteLine("------------ Vehicle removal ------------");
-            Console.WriteLine();
-            if (GarageHandler.RemoveVehicle(regNr)) 
-                Console.WriteLine($"Removal of vehicle with Reg.nr:{regNr} was succesfull");
-            else 
-                Console.WriteLine($"Sorry, removal of vehicle with Reg.nr:{regNr} faild");
-            Console.WriteLine();
-            Console.WriteLine("------------ Vehicle removal ------------");
-            Console.WriteLine();
-            Console.WriteLine("Press any key to return: ");
-            Console.ReadLine();
+            Util.PrintClear();
+            var regNr = Util.Input("Specify reg.nr of Vehicle: ");
+            string str;
+            if (GarageHandler.RemoveVehicle(regNr))
+                str=string.Format($"Removal of vehicle with Reg.nr:{regNr} was succesfull");
+            else
+                str = string.Format($"Sorry, removal of vehicle with Reg.nr:{regNr} faild");
+            Util.MsgBox("Vehicle removal", str);
         }
-
-        private static void PrintGarageStat()
-        {
-            Console.Clear();
-            Console.WriteLine("------------ Garage stat ------------");
-            Console.WriteLine();
-            Console.WriteLine($"{GarageHandler.StatsVehiclesInGarage()}\n\n{GarageHandler.ListGarageCapacity()}");
-            Console.WriteLine();
-            Console.WriteLine("------------ Garage stat ------------");
-            Console.WriteLine();
-            Console.WriteLine("Press any key to return: ");
-            Console.ReadLine();
-        }
-
-        static void PrintGarage()
-        {
-            Console.Clear();
-            Console.WriteLine("------------ Garage inv ------------");
-            Console.WriteLine();
-            Console.WriteLine($"{GarageHandler.ListVehicles()}");
-            Console.WriteLine();
-            Console.WriteLine("------------ Garage inv ------------");
-            Console.WriteLine();
-            Console.WriteLine("Press any key to return: ");
-            Console.ReadLine();
-        }
-
+        private static void PrintGarageStat() => 
+            Util.MsgBox("Garage stat", string.Format($"{GarageHandler.StatsVehiclesInGarage()}\n\n{GarageHandler.ListGarageCapacity()}"));
+        static void PrintGarage() => Util.MsgBox("Garage inv", string.Format($"{GarageHandler.ListVehicles()}"));
+       
         static void  AddVehicle()
         {
-            Console.Clear();
-            Console.WriteLine("------------ Add Vehicle ------------");
-            Console.WriteLine();
-            Console.Write("Specify type of Vehicle: ");
-            var type = Console.ReadLine();
-            //Console.Write("Specify reg.nr of Vehicle: ");
-            //var regNr = Console.ReadLine();
-            Vehicle vehicle = GarageHandler.BuildVehicle(type); //, regNr);
-
-            Console.WriteLine("------------ Add Vehicle ------------");
-            Console.WriteLine();
+            Util.PrintClear();
+            var type =Util.Input("Specify type of Vehicle: ");
+            Vehicle vehicle = VehicleHandler.BuildVehicle(type);
+            string str;
             if (GarageHandler.AddVehicle(vehicle))
-                Console.WriteLine($"Adding vehicle was succesfull");
+                str=string.Format($"Adding vehicle was succesfull");
             else
-                Console.WriteLine($"Sorry, adding of vehicle faild");
-            Console.WriteLine();
-            Console.WriteLine("------------ Add Vehicle ------------");
-            Console.WriteLine();
-            Console.WriteLine("Press any key to return: ");
-            Console.ReadLine();
-
+                str = string.Format($"Sorry, adding of vehicle faild");
+            Util.MsgBox("Add Vehicle", str);
         }
 
         static void CreateGarage()
         {
-            Console.Clear();
-            Console.Write("Specify capacity of Garage: ");
-            int cap = int.TryParse(Console.ReadLine(), out cap) ? cap : -1;
-
+            Util.PrintClear();
+            var cap = Util.ConvInt( Util.Input("Specify capacity of garage: "));
             GarageHandler.SetUpGarage(cap);
-            Console.WriteLine("------------ Garage inv ------------");
-            Console.WriteLine();
-            Console.WriteLine($"{GarageHandler.ListVehicles()}\n\n{GarageHandler.ListGarageCapacity()}");
-            Console.WriteLine();
-            Console.WriteLine("------------ Garage inv ------------");
-            Console.WriteLine();
-            Console.WriteLine("Press any key to return: ");
-            Console.ReadLine();
+            Util.MsgBox("New garage", string.Format($"{GarageHandler.ListVehicles()}\n\n{GarageHandler.ListGarageCapacity()}"));
         }
-        
-
-
-
+      
         static void ImportVehicles()
         {
-            var testCars= new Vehicle[]
-                        {
-                   new Car {RegNr="ABC11",Color="Red",NoWheels=4},
-                   new Car {RegNr="ABC222",Color="White",NoWheels=4},
-                   new Car {RegNr="ABC333",Color="Grey",NoWheels=4},
-                   new Car {RegNr="ABC444",Color="Grey",NoWheels=4},
-                   new Boat {RegNr="B-111",Color="Grey",NoWheels=0},
-                   new Boat {RegNr="B-222",Color="Blue",NoWheels=0}
-                        };
-            foreach (var car in testCars)
+            var cnt = 0;
+            var vehicles = GarageHandler.GetTestVehicles();
+            foreach (var v in vehicles)
             {
-                GarageHandler.AddVehicle(car);
+                if (GarageHandler.AddVehicle(v)) cnt++;
             }
+            Util.MsgBox("Import", string.Format($"Succesfully imported {cnt} (of {vehicles.Length}) vehicles"));
 
-            Console.Clear();
-            Console.WriteLine("------------ Import ------------");
-            Console.WriteLine();
-            Console.WriteLine($"Imported {testCars.Length} vehicles");
-            Console.WriteLine();
-            Console.WriteLine("------------ Import ------------");
-            Console.WriteLine();
-            Console.WriteLine("Press any key to return: ");
-            Console.ReadLine();
         }
     }
 }

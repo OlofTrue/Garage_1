@@ -45,5 +45,31 @@ namespace Garage_1
             if (!int.TryParse(str, out int val)) val = 0;
             return val;
         }
+
+        internal static string Input(string label)
+        {
+            Console.Write(label);
+            return Console.ReadLine();
+        }
+
+        internal static void MsgBox(string strCaption,string strTxt)
+        {
+            Console.Clear();
+            Console.WriteLine("------------ " + strCaption + " ------------");
+            Console.WriteLine();
+            Console.WriteLine(strTxt);
+            Console.WriteLine();
+            Console.WriteLine("------------ " + strCaption + " ------------");
+            Console.WriteLine();
+            Console.WriteLine("Press any key to return: ");
+            Console.ReadLine();
+        }
+
+        internal static void PrintClear() => Console.Clear();
+ 
+
+
+
+
     }
 }

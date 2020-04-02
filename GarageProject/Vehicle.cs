@@ -56,7 +56,7 @@ namespace Garage_1
             return (result.ToString() + ";").Replace(";;", "");
         }
     }
-    public class Aiplane : Vehicle
+    public class Airplane : Vehicle
     {
         public override int NoWheels { get; set; } = 2;
 
