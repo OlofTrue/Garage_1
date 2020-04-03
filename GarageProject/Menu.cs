@@ -63,7 +63,7 @@ namespace Garage_1
         static void AddVehicle()
         {
             Util.PrintClear();
-            var type = Util.Input("Specify type of Vehicle: ");
+            var type = Util.Input("Specify type of Vehicle (ai,mo,ca,bu,bo): ");
             Vehicle vehicle = VehicleHandler.BuildVehicle(type);
             string str;
             if (GarageHandler.AddVehicle(vehicle))

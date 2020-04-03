@@ -10,21 +10,26 @@ namespace Garage_1
         internal static Vehicle BuildVehicle(string type) //,string regNr
         {
             Vehicle vehicle = null;
-            switch (type)
+            switch (type.ToLower())
             {
-                case "Airplane":
+                case "airplane":
+                case "ai":
                     vehicle = new Airplane();
                     break;
-                case "Motorcycle":
+                case "motorcycle":
+                case "mo":
                     vehicle = new Motorcycle();
                     break;
-                case "Car":
+                case "car":
+                case "ca":
                     vehicle = new Car();
                     break;
-                case "Bus":
+                case "bus":
+                case "bu":
                     vehicle = new Bus();
                     break;
-                case "Boat":
+                case "boat":
+                case "bo":
                     vehicle = new Boat();
                     break;
                 default:
