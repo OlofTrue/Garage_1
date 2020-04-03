@@ -12,9 +12,12 @@ namespace Garage_1
 
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (var item in vehicles)
+            if (vehicles != null)
             {
-                yield return item;
+                foreach (var item in vehicles)
+                {
+                    if (item != null)  yield return item;
+                }
             }
         }
 
@@ -39,7 +42,7 @@ namespace Garage_1
 
         public Boolean AddVehicle(T vehicle)
         {
-            if (IsFull || vehicle==null) return false;
+            if (IsFull || vehicle == null) return false;
             vehicle.IsParked = true;
             vehicles[occupancy++] = vehicle;
             return true;
