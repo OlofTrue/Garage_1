@@ -1,6 +1,8 @@
 using Garage_1;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
 namespace GarageUnitTest
 {
@@ -77,8 +79,8 @@ namespace GarageUnitTest
 
 
         [TestMethod]
-        [DataRow(-1, 1)]
-        [DataRow(0, 1)]
+        [DataRow(-1, 0)]
+        [DataRow(0, 0)]
         [DataRow(1, 1)]
         [DataRow(2, 2)]
         [DataRow(Garage<Vehicle>.MAX_CAPACITY, Garage<Vehicle>.MAX_CAPACITY)]
@@ -89,7 +91,8 @@ namespace GarageUnitTest
             var garage = GarageHandler.GetGarageCopyForTest(init);
 
             //Act
-            var actual = garage.Capacity;
+            var actual = 0;
+            if (garage != null) actual=garage.Capacity;
 
             //Assert
             Assert.AreEqual(expected, actual);
@@ -114,8 +117,34 @@ namespace GarageUnitTest
 
             //Assert
             Assert.AreEqual(expected, garage.Occupancy);
-
         }
+
+        public static int CountUntyped( IEnumerable source) //this
+        {
+            int count = 0;
+            foreach (object obj in source) { count++; }
+            return count;
+        }
+
+
+        [TestMethod]
+        [DataRow(5, 0)]
+        [DataRow(5, 3)]
+        [DataRow(5, 5)]
+        public void GarageIEnumerable_WithVehicles_ReturnSameNoVehicles(int cap, int len)
+        {
+            //Arrange
+            var garage = GarageHandler.GetGarageCopyForTest(cap);
+            var cars = CreateVehicles(len);
+
+            //Act
+            foreach (var car in cars) garage.AddVehicle(car);
+
+            //Assert
+            //GetEnumerator
+            Assert.AreEqual(len, CountUntyped(garage));
+        }
+
 
     }
 }

@@ -12,7 +12,7 @@ namespace Garage_1
         public static void SetUpGarage(int cap)
         {
             garage = null;
-            garage = new Garage<Vehicle>(cap);
+            if (cap>0) garage = new Garage<Vehicle>(cap);
         }
 
         public static Garage<Vehicle> GetGarageCopyForTest(int cap)
