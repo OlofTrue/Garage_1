@@ -59,12 +59,15 @@ namespace Garage_1
     public class Airplane : Vehicle
     {
         public override int NoWheels { get; set; } = 2;
+        public string FuelType { get; set; }
 
     }
 
     public class Motorcycle : Vehicle
     {
         public override int NoWheels { get; set; } = 2;
+        public int CylinderVolume { get; set; }
+        public string FuelType { get; set; }
     }
 
     public class Car : Vehicle
@@ -74,12 +77,14 @@ namespace Garage_1
 
         //}
         public override int NoWheels { get; set; } = 4;
+        public string FuelType { get; set; }
     }
 
     public class Bus : Vehicle
     {
         public override int NoWheels { get; set; } = 4;
         public int NoSeats { get; set; }
+        public string FuelType { get; set; }
     }
 
     public class Boat : Vehicle
