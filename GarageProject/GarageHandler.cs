@@ -46,8 +46,9 @@ namespace Garage_1
 
         public static string ListGarageCapacity()
         {
-            return "Capacity: " + (garage?.Count() ?? 0).ToString()
-                      + "\n\nMaxcapacity: " + Garage<Vehicle>.MAX_CAPACITY.ToString();
+            return "Occupancy: " + (garage?.Occupancy ?? 0).ToString()
+                + "\n\nCapacity: " + (garage?.Count() ?? 0).ToString()
+                + "\n\nMaxcapacity: " + Garage<Vehicle>.MAX_CAPACITY.ToString();
         }
 
         public static string ListVehicle(string search)
