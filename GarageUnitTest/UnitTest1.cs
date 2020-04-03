@@ -131,7 +131,7 @@ namespace GarageUnitTest
         [DataRow(5, 0)]
         [DataRow(5, 3)]
         [DataRow(5, 5)]
-        public void GarageIEnumerable_WithVehicles_ReturnSameNoVehicles(int cap, int len)
+        public void GarageIEnumerable_WithAddedVehicles_ReturnSameNoVehicles(int cap, int len)
         {
             //Arrange
             var garage = GarageHandler.GetGarageCopyForTest(cap);
@@ -144,7 +144,5 @@ namespace GarageUnitTest
             //GetEnumerator
             Assert.AreEqual(len, CountUntyped(garage));
         }
-
-
     }
 }

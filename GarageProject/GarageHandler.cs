@@ -21,11 +21,14 @@ namespace Garage_1
             return garage;
         }
 
-        public static Boolean AddVehicle(Vehicle vehicle)
+        public static bool AddVehicle(Vehicle vehicle, out string errMsg)
         {
+            errMsg = "";
             var success = false;
             if (garage?.GetVehicle(vehicle?.RegNr) == null)
                 success = garage?.AddVehicle(vehicle) ?? false;
+            else
+                errMsg = "Reg.nr already exists";
             return success;
         }
 
@@ -47,7 +50,7 @@ namespace Garage_1
         public static string ListGarageCapacity()
         {
             return "Occupancy: " + (garage?.Occupancy ?? 0).ToString()
-                + "\n\nCapacity: " + (garage?.Count() ?? 0).ToString()
+                + "\n\nCapacity: " + (garage?.Capacity ?? 0).ToString()
                 + "\n\nMaxcapacity: " + Garage<Vehicle>.MAX_CAPACITY.ToString();
         }
 
@@ -57,8 +60,8 @@ namespace Garage_1
             return ListVehicles(vehicle?.RegNr);
         }
 
-        public static void Park(Vehicle vehicle) => vehicle.IsParked = true;
-        public static void UnPark(Vehicle vehicle) => vehicle.IsParked = false;
+        public static Boolean GarageMissing() => (garage is null);
+        public static Boolean GarageIsFull() =>garage.IsFull;
 
         internal static string StatsVehiclesInGarage()
         {
@@ -75,5 +78,7 @@ namespace Garage_1
         {
             return Garage<Vehicle>.TestVehicles();
         }
+
+
     }
 }

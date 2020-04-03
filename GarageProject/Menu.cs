@@ -41,6 +41,11 @@ namespace Garage_1
         private static void FindVehicleByRegNr()
         {
             Util.PrintClear();
+            if (GarageHandler.GarageMissing())
+            {
+                Util.MsgBox("Message", "Garage is missing");
+                return;
+            }
             var regNr = Util.Input("Specify reg.nr of Vehicle: ");
             Util.MsgBox("Find vehicle by regNr", string.Format($"{GarageHandler.ListVehicle(regNr)}"));
         }
@@ -48,6 +53,11 @@ namespace Garage_1
         private static void RemoveVehicle()
         {
             Util.PrintClear();
+            if (GarageHandler.GarageMissing())
+            {
+                Util.MsgBox("Message", "Garage is missing");
+                return;
+            }
             var regNr = Util.Input("Specify reg.nr of Vehicle: ");
             string str;
             if (GarageHandler.RemoveVehicle(regNr))
@@ -58,18 +68,35 @@ namespace Garage_1
         }
         private static void PrintGarageStat() =>
             Util.MsgBox("Garage stat", GarageHandler.StatsVehiclesInGarage() + "\n\n" + GarageHandler.ListGarageCapacity());
-        static void PrintGarage() => Util.MsgBox("Garage inv", GarageHandler.ListVehicles());
-
+        static void PrintGarage()
+        {
+            if (GarageHandler.GarageMissing())
+            {
+                Util.MsgBox("Message", "Garage is missing");
+                return;
+            }
+            Util.MsgBox("Garage inv", GarageHandler.ListVehicles());
+        }
         static void AddVehicle()
         {
             Util.PrintClear();
+            if (GarageHandler.GarageMissing())
+            {
+                Util.MsgBox("Message", "Garage is missing");
+                return;
+            }
+            if (GarageHandler.GarageIsFull())
+            {
+                Util.MsgBox("Message", "Garage is full");
+                return;
+            }
             var type = Util.Input("Specify type of Vehicle (ai,mo,ca,bu,bo): ");
             Vehicle vehicle = VehicleHandler.BuildVehicle(type);
             string str;
-            if (GarageHandler.AddVehicle(vehicle))
+            if (GarageHandler.AddVehicle(vehicle,out var errMsg))
                 str = string.Format($"Adding vehicle was succesfull");
             else
-                str = string.Format($"Sorry, adding of vehicle faild");
+                str = string.Format($"Sorry, adding of vehicle faild. {errMsg}");
             Util.MsgBox("Add Vehicle", str);
         }
 
@@ -83,13 +110,27 @@ namespace Garage_1
 
         static void ImportVehicles()
         {
+            Util.PrintClear();
+            if (GarageHandler.GarageMissing())
+            {
+                Util.MsgBox("Message", "Garage is missing");
+                return;
+            }
+            if (GarageHandler.GarageIsFull())
+            {
+                Util.MsgBox("Message", "Garage is full");
+                return;
+            }
+
             var cnt = 0;
+            string errLst = "";
             var vehicles = GarageHandler.GetTestVehicles();
             foreach (var v in vehicles)
             {
-                if (GarageHandler.AddVehicle(v)) cnt++;
+                if (GarageHandler.AddVehicle(v, out var err)) cnt++;
+                else errLst += "\n" + err;
             }
-            Util.MsgBox("Import", string.Format($"Succesfully imported {cnt} (of {vehicles.Length}) vehicles"));
+            Util.MsgBox("Import", string.Format($"Succesfully imported {cnt} (of {vehicles.Length}) vehicles. {errLst}"));
         }
 
     }
