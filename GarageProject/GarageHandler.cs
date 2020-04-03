@@ -40,7 +40,7 @@ namespace Garage_1
                     .Where(item => (item is null) ? false :
                         string.IsNullOrEmpty(regNr) ?
                         item?.IsParked == onlyParked
-                        : item?.RegNr == regNr )
+                        : item?.RegNr.ToLower() == regNr.ToLower() )
                     .ToList()
                     .Select(i => i.ToString()));
 
