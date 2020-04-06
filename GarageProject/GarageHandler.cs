@@ -79,7 +79,7 @@ namespace Garage_1
             return List<Vehicle>.TestVehicles();
         }
 
-        private static string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.txt";
+        private static string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.json";
 
         internal static void Export()
         {
