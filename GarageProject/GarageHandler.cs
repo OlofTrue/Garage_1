@@ -79,14 +79,17 @@ namespace Garage_1
             return List<Vehicle>.TestVehicles();
         }
 
+        private static string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.txt";
+
         internal static void Export()
         {
-            JsonSerialization.WriteToJsonFile<System.Collections.Generic.List<Vehicle>>(System.AppDomain.CurrentDomain.BaseDirectory + "garage.txt", garage.ToList());
+            System.IO.File.Delete(jsonFile);
+            JsonSerialization.WriteToJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile, garage.ToList());
         }
 
         internal static System.Collections.Generic.List<Vehicle> Import()
         {
-            var vehicles = JsonSerialization.ReadFromJsonFile<System.Collections.Generic.List<Vehicle>>(System.AppDomain.CurrentDomain.BaseDirectory +  "garage.txt");
+            var vehicles = JsonSerialization.ReadFromJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile);
             return vehicles;
         }
     }
