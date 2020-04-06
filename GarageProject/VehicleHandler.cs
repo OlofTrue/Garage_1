@@ -7,10 +7,6 @@ namespace Garage_1
 {
     class VehicleHandler
     {
-
-        public static void Park(Vehicle vehicle) => vehicle.IsParked = true;
-        public static void UnPark(Vehicle vehicle) => vehicle.IsParked = false;
-
         internal static Vehicle BuildVehicle(string type) //,string regNr
         {
             Vehicle vehicle = null;

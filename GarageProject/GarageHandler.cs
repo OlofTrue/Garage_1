@@ -7,15 +7,15 @@ namespace Garage_1
 {
     static public class GarageHandler
     {
-        private static Garage<Vehicle> garage;
+        private static List<Vehicle> garage;
 
         public static void SetUpGarage(int cap)
         {
             garage = null;
-            if (cap>0) garage = new Garage<Vehicle>(cap);
+            if (cap>0) garage = new List<Vehicle>(cap);
         }
 
-        public static Garage<Vehicle> GetGarageCopyForTest(int cap)
+        public static List<Vehicle> GetGarageCopyForTest(int cap)
         {
             SetUpGarage(cap);
             return garage;
@@ -37,12 +37,12 @@ namespace Garage_1
             return garage?.RemoveVehicle(regNr) ?? false;
         }
 
-        public static string ListVehicles(string regNr = "", Boolean onlyParked = true) =>
+        public static string ListVehicles(string regNr = "") =>
             (garage is null) ? "" :
                 string.Join("\n", garage
                     .Where(item => (item is null) ? false :
                         string.IsNullOrEmpty(regNr) ?
-                        item?.IsParked == onlyParked
+                        true
                         : item?.RegNr.ToLower() == regNr.ToLower() )
                     .ToList()
                     .Select(i => i.ToString()));
@@ -51,7 +51,7 @@ namespace Garage_1
         {
             return "Occupancy: " + (garage?.Occupancy ?? 0).ToString()
                 + "\n\nCapacity: " + (garage?.Capacity ?? 0).ToString()
-                + "\n\nMaxcapacity: " + Garage<Vehicle>.MAX_CAPACITY.ToString();
+                + "\n\nMaxcapacity: " + List<Vehicle>.MAX_CAPACITY.ToString();
         }
 
         public static string ListVehicle(string search)
@@ -67,7 +67,7 @@ namespace Garage_1
         {
             if (garage is null) return "";
             var result_list = garage
-                 .Where(v => v != null && v.IsParked)
+                 .Where(v => v != null )
                  .GroupBy(v => v.Type)
                  .Select(group => new { Type = group.Key,Count = group.Count() })
                  .ToList();
@@ -76,9 +76,18 @@ namespace Garage_1
  
         public static Vehicle[] GetTestVehicles()
         {
-            return Garage<Vehicle>.TestVehicles();
+            return List<Vehicle>.TestVehicles();
         }
 
+        internal static void Export()
+        {
+            JsonSerialization.WriteToJsonFile<System.Collections.Generic.List<Vehicle>>(System.AppDomain.CurrentDomain.BaseDirectory + "garage.txt", garage.ToList());
+        }
 
+        internal static System.Collections.Generic.List<Vehicle> Import()
+        {
+            var vehicles = JsonSerialization.ReadFromJsonFile<System.Collections.Generic.List<Vehicle>>(System.AppDomain.CurrentDomain.BaseDirectory +  "garage.txt");
+            return vehicles;
+        }
     }
 }

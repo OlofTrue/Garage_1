@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Text;
 
 namespace Garage_1
@@ -17,7 +19,9 @@ namespace Garage_1
                 + "\n5. Nytt garage"
                 + "\n6. Find vehicle by regnr"
                 + "\n7. Find vehicle (generic)"
-                + "\n9. Import some Vehicles"
+                + "\n9. Create some test-Vehicles"
+                + "\nI. Import some Vehicles"
+                + "\nE. Export some Vehicles"
                 + "\n0. Exit the application");
             Console.Write("\r\nSelect an option: ");
             var actionMeny = new Dictionary<string, Action>()
@@ -29,7 +33,9 @@ namespace Garage_1
                 {"D5", CreateGarage },
                 {"D6", FindVehicleByRegNr },
                 {"D7", FindVehicle },
-                {"D9", ImportVehicles },
+                {"D9", CreateTestVehicles },
+                {"I", ImportVehicles },
+                {"E", ExportVehicles },
                 {"D0", ()=>{Environment.Exit(0); } }
             };
             var strMenu = Console.ReadKey(intercept: true).Key.ToString();
@@ -108,7 +114,7 @@ namespace Garage_1
             Util.MsgBox("New garage", string.Format($"{GarageHandler.ListVehicles()}\n\n{GarageHandler.ListGarageCapacity()}"));
         }
 
-        static void ImportVehicles()
+        static void CreateTestVehicles()
         {
             Util.PrintClear();
             if (GarageHandler.GarageMissing())
@@ -130,7 +136,51 @@ namespace Garage_1
                 if (GarageHandler.AddVehicle(v, out var err)) cnt++;
                 else errLst += "\n" + err;
             }
-            Util.MsgBox("Import", string.Format($"Succesfully imported {cnt} (of {vehicles.Length}) vehicles. {errLst}"));
+            Util.MsgBox("Create test vehicles", string.Format($"Succesfully created {cnt} (of {vehicles.Length}) vehicles. {errLst}"));
+        }
+
+
+        static void ExportVehicles()
+        {
+            Util.PrintClear();
+            if (GarageHandler.GarageMissing())
+            {
+                Util.MsgBox("Message", "Garage is missing");
+                return;
+            }
+
+            GarageHandler.Export();
+            
+
+            //Util.MsgBox("Import", string.Format($"Succesfully imported {cnt} (of {vehicles.Length}) vehicles. {errLst}"));
+        }
+
+
+
+
+        static void ImportVehicles()
+        {
+            Util.PrintClear();
+            if (GarageHandler.GarageMissing())
+            {
+                Util.MsgBox("Message", "Garage is missing");
+                return;
+            }
+            if (GarageHandler.GarageIsFull())
+            {
+                Util.MsgBox("Message", "Garage is full");
+                return;
+            }
+
+            var cnt = 0;
+            string errLst = "";
+            var vehicles = GarageHandler.Import();
+            foreach (var v in vehicles)
+            {
+                if (GarageHandler.AddVehicle(v, out var err)) cnt++;
+                else errLst += "\n" + err;
+            }
+            Util.MsgBox("Import", string.Format($"Succesfully imported {cnt} (of {vehicles.Count}) vehicles. {errLst}"));
         }
 
     }

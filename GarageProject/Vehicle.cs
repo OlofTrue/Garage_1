@@ -43,7 +43,7 @@ namespace Garage_1
         public string RegNr { get; set; }
         public string Color { get; set; }
         public virtual int NoWheels { get; set; }
-        public Boolean IsParked { get; set; }
+        //public Boolean IsParked { get; }
         public string Type => this.GetType().Name;
         public override string ToString()
         {

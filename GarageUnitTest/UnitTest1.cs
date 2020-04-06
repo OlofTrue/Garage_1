@@ -83,8 +83,8 @@ namespace GarageUnitTest
         [DataRow(0, 0)]
         [DataRow(1, 1)]
         [DataRow(2, 2)]
-        [DataRow(Garage<Vehicle>.MAX_CAPACITY, Garage<Vehicle>.MAX_CAPACITY)]
-        [DataRow(Garage<Vehicle>.MAX_CAPACITY + 1, Garage<Vehicle>.MAX_CAPACITY)]
+        [DataRow(Garage_1.List<Vehicle>.MAX_CAPACITY, Garage_1.List<Vehicle>.MAX_CAPACITY)]
+        [DataRow(Garage_1.List<Vehicle>.MAX_CAPACITY + 1, Garage_1.List<Vehicle>.MAX_CAPACITY)]
         public void GarageCreateArray_WithCapacity_ReturnsCapacity(int init, int expected)
         {
             //Arrange
