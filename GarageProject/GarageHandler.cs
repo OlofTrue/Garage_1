@@ -79,7 +79,7 @@ namespace Garage_1
             return List<Vehicle>.TestVehicles();
         }
 
-        private static string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.json";
+        private static readonly string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.json";
 
         internal static void Export()
         {
@@ -87,7 +87,7 @@ namespace Garage_1
             JsonSerialization.WriteToJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile, garage.ToList());
         }
 
-        internal static System.Collections.Generic.List<Vehicle> Import()
+        internal static System.Collections.Generic.List<Vehicle> Import() 
         {
             var vehicles = JsonSerialization.ReadFromJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile);
             return vehicles;

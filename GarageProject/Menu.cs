@@ -148,11 +148,9 @@ namespace Garage_1
                 Util.MsgBox("Message", "Garage is missing");
                 return;
             }
-
             GarageHandler.Export();
-            
-
-            //Util.MsgBox("Import", string.Format($"Succesfully imported {cnt} (of {vehicles.Length}) vehicles. {errLst}"));
+          
+            Util.MsgBox("Message", "Vehicles in garage exported");
         }
 
 
