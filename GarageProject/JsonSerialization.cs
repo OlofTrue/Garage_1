@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
+﻿using System.IO;
 using Newtonsoft.Json;
 
 namespace Garage_1
@@ -33,14 +30,10 @@ namespace Garage_1
             try
             {
                 //var contentsToWriteToFile = JsonConvert.SerializeObject(objectToWrite); //Newtonsoft.Json.
-
                 string contentsToWriteToFile = JsonConvert.SerializeObject(objectToWrite, Formatting.Indented, new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto
                 });
-
-
-
                 writer = new StreamWriter(filePath, append);
                 writer.Write(contentsToWriteToFile);
             }
@@ -66,13 +59,10 @@ namespace Garage_1
                 reader = new StreamReader(filePath);
                 var fileContents = reader.ReadToEnd();
                 //return JsonConvert.DeserializeObject<T>(fileContents); //Newtonsoft.Json.
-
                 return JsonConvert.DeserializeObject<T>(fileContents, new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto
                 });
-
-
             }
             finally
             {
