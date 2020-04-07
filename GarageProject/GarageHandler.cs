@@ -60,6 +60,15 @@ namespace Garage_1
             return ListVehicles(vehicle?.RegNr);
         }
 
+        internal static string ListVehicleG(string search)
+        {
+            if (garage is null) return "";
+            var result_list = garage
+                 .Where(v => v.MatchAny(search) )
+                 .ToList();
+            return string.Join("\n", result_list);
+        }
+
         public static Boolean GarageMissing() => (garage is null);
         public static Boolean GarageIsFull() =>garage.IsFull;
 
@@ -80,6 +89,8 @@ namespace Garage_1
         }
 
         private static readonly string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.json";
+
+    
 
         internal static void Export()
         {

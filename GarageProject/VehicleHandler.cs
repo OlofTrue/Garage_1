@@ -55,6 +55,10 @@ namespace Garage_1
                         if (typeP == "String") prop.SetValue(obj, strValue, null);
                         if (typeP == "Single") prop.SetValue(obj, Util.ConvFloat(strValue), null);
                         if (typeP == "Boolean") prop.SetValue(obj, (strValue == "true" || strValue == "1"), null);
+
+
+                        //.GetProperty(nameP).GetCustomAttribute<Display>();
+
                     }
                 }
             }

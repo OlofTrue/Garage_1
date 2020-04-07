@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 
 
@@ -19,18 +21,41 @@ namespace Garage_1
             return this.GetType().GetProperties()
                  .Select(prop => new {
                      NameP = prop.Name,
-                     TypeP = prop.PropertyType.Name
+                     TypeP = prop.PropertyType.Name,
                  })
+                 //.Where(p => p.GetCustomAttribute(typeof(Include)) != null)
+                 //.OrderBy(p => ((Include)p.GetCustomAttribute(typeof(Include))).Order)
                  .ToList();
         }
 
-        public virtual Boolean Match(string strSearch)
+        public Boolean Match(string strSearch)
         {
-            if (strSearch == "")  return true;
-            return false;
+            Boolean anytMatch = false;
+                foreach (string item in this.ToString().Split(";"))
+                {
+                foreach (var word in strSearch.Split(";"))
+                {
+                    if (item.Split("=")[1].ToLower().Trim() == word.ToLower().Trim())
+                    {
+                        anytMatch = true;
+                        break;
+                    }
+                    if (strSearch.Contains("=")) {
+                        if (item.ToLower().Replace(" ","") == word.ToLower().Replace(" ",""))
+                        {
+                            anytMatch = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            return anytMatch;
         }
+        public virtual Boolean MatchAny(string strSearch) => this.Match(strSearch);
 
-        //[Display(Order = 1)]
+        //[Order(1)]
+        //[DisplayName("Reg.nr")]
+        //[Unique=1]
         public string RegNr { get; set; }
         public string Color { get; set; }
         public virtual int NoWheels { get; set; }
@@ -51,7 +76,7 @@ namespace Garage_1
     {
         public override int NoWheels { get; set; } = 2;
         public string FuelType { get; set; }
-
+        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
 
     public class Motorcycle : Vehicle
@@ -59,16 +84,14 @@ namespace Garage_1
         public override int NoWheels { get; set; } = 2;
         public int CylinderVolume { get; set; }
         public string FuelType { get; set; }
+        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
 
     public class Car : Vehicle
     {
-        //public Car(string regNr, string color) : base(regNr, color)
-        //{
-
-        //}
         public override int NoWheels { get; set; } = 4;
         public string FuelType { get; set; }
+        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
 
     public class Bus : Vehicle
@@ -76,6 +99,7 @@ namespace Garage_1
         public override int NoWheels { get; set; } = 4;
         public int NoSeats { get; set; }
         public string FuelType { get; set; }
+        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
 
     public class Boat : Vehicle
@@ -87,6 +111,7 @@ namespace Garage_1
         public override int NoWheels { get; set; } = 0;
         public int NoEngines { get; set; } = 1;
         public float Lenght { get; set; }
+        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
 
 }
