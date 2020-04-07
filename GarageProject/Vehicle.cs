@@ -6,20 +6,15 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-
 namespace Garage_1
 {
     public abstract class Vehicle
     {
-        //public Vehicle(string regNr, string color)
-        //{
-        //    RegNr = regNr;
-        //    Color = color
-        //}
         public IList GetVehicleProperties()
         {
             return this.GetType().GetProperties()
-                 .Select(prop => new {
+                 .Select(prop => new
+                 {
                      NameP = prop.Name,
                      TypeP = prop.PropertyType.Name,
                  })
@@ -31,8 +26,8 @@ namespace Garage_1
         public Boolean Match(string strSearch)
         {
             Boolean anytMatch = false;
-                foreach (string item in this.ToString().Split(";"))
-                {
+            foreach (string item in this.ToString().Split(";"))
+            {
                 foreach (var word in strSearch.Split(";"))
                 {
                     if (item.Split("=")[1].ToLower().Trim() == word.ToLower().Trim())
@@ -40,8 +35,9 @@ namespace Garage_1
                         anytMatch = true;
                         break;
                     }
-                    if (strSearch.Contains("=")) {
-                        if (item.ToLower().Replace(" ","") == word.ToLower().Replace(" ",""))
+                    if (strSearch.Contains("="))
+                    {
+                        if (item.ToLower().Replace(" ", "") == word.ToLower().Replace(" ", ""))
                         {
                             anytMatch = true;
                             break;
@@ -60,7 +56,7 @@ namespace Garage_1
         public string Color { get; set; }
         public virtual int NoWheels { get; set; }
         //public Boolean IsParked { get; }
-        public string Type => this.GetType().Name; 
+        public string Type => this.GetType().Name;
         public override string ToString()
         {
             var result = new StringBuilder();
@@ -72,6 +68,7 @@ namespace Garage_1
             return (result.ToString() + ";").Replace(";;", "");
         }
     }
+
     public class Airplane : Vehicle
     {
         public override int NoWheels { get; set; } = 2;
@@ -113,5 +110,4 @@ namespace Garage_1
         public float Lenght { get; set; }
         public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
-
 }

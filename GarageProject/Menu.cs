@@ -10,17 +10,12 @@ namespace Garage_1
     {
         internal struct MenuItem
         {
-            internal MenuItem(string caption, Action act)
-            {
-                Caption = caption;
-                Act = act;
-            }
+            internal MenuItem(string caption, Action act) { Caption = caption; Act = act; }
             internal readonly string Caption;
             internal readonly Action Act;
         };
         internal static bool MainMenu()
         {
-
             Console.Clear();
             Console.WriteLine("Garage manager\n");
             var actionMeny = new Dictionary<string, MenuItem>()
@@ -62,8 +57,7 @@ namespace Garage_1
             Util.MsgBox("Find vehicles by search string", string.Format($"{GarageHandler.ListVehicleG(search)}"));
         }
 
-
-private static void FindVehicleByRegNr()
+        private static void FindVehicleByRegNr()
         {
             Util.PrintClear();
             if (GarageHandler.GarageMissing())
@@ -158,7 +152,6 @@ private static void FindVehicleByRegNr()
             Util.MsgBox("Create test vehicles", string.Format($"Succesfully created {cnt} (of {vehicles.Length}) vehicles. {errLst}"));
         }
 
-
         static void ExportVehicles()
         {
             Util.PrintClear();
@@ -171,9 +164,6 @@ private static void FindVehicleByRegNr()
 
             Util.MsgBox("Message", "Vehicles in garage exported");
         }
-
-
-
 
         static void ImportVehicles()
         {
