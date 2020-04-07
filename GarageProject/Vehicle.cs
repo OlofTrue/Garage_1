@@ -19,7 +19,7 @@ namespace Garage_1
                      TypeP = prop.PropertyType.Name,
                  })
                  //.Where(p => p.GetCustomAttribute(typeof(Include)) != null)
-                 //.OrderBy(p => ((Include)p.GetCustomAttribute(typeof(Include))).Order)
+                 //.OrderBy(p => p.GetCustomAttribute(typeof(Order)) ?? 99)
                  .ToList();
         }
 
@@ -101,10 +101,6 @@ namespace Garage_1
 
     public class Boat : Vehicle
     {
-        //public Boat(string regNr, string color,int NoEngines, float Lenght) : base( regNr,  color)
-        //{
-
-        //}
         public override int NoWheels { get; set; } = 0;
         public int NoEngines { get; set; } = 1;
         public float Lenght { get; set; }
