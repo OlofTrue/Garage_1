@@ -8,38 +8,51 @@ namespace Garage_1
 {
     class Menu
     {
+        internal struct MenuItem
+        {
+            internal MenuItem(string caption,Action act)
+            {
+                Caption = caption;
+                Act = act;
+            }
+            internal readonly string Caption;
+            internal readonly Action Act;
+        };
+
+
         internal static bool MainMenu()
         {
+
+
+
+
             Console.Clear();
-            Console.WriteLine("Garage manager\n"
-                + "\n1. Examine garage"
-                + "\n2. Statistics garage"
-                + "\n3. Add Vehicle"
-                + "\n4. Remove Vehicle"
-                + "\n5. Nytt garage"
-                + "\n6. Find vehicle by regnr"
-                + "\n7. Find vehicle (generic)"
-                + "\n9. Create some test-Vehicles"
-                + "\nI. Import some Vehicles"
-                + "\nE. Export some Vehicles"
-                + "\n0. Exit the application");
-            Console.Write("\r\nSelect an option: ");
-            var actionMeny = new Dictionary<string, Action>()
+            Console.WriteLine("Garage manager\n");
+            var actionMeny = new Dictionary<string, MenuItem>()
             {
-                {"D1", PrintGarage },
-                {"D2", PrintGarageStat },
-                {"D3", AddVehicle },
-                {"D4", RemoveVehicle },
-                {"D5", CreateGarage },
-                {"D6", FindVehicleByRegNr },
-                {"D7", FindVehicle },
-                {"D9", CreateTestVehicles },
-                {"I", ImportVehicles },
-                {"E", ExportVehicles },
-                {"D0", ()=>{Environment.Exit(0); } }
-            };
-            var strMenu = Console.ReadKey(intercept: true).Key.ToString();
-            if (actionMeny.ContainsKey(strMenu)) actionMeny[strMenu]?.Invoke();
+                { "D1",new MenuItem("New garage", CreateGarage) },
+                { "D2",new MenuItem("Examine garage", PrintGarage)},
+                { "D3",new MenuItem("Statistics garage", PrintGarageStat) },
+                { "D4",new MenuItem("Add Vehicle", AddVehicle) },
+                { "D5",new MenuItem("Remove Vehicle", RemoveVehicle) },
+                { "D6",new MenuItem("Find vehicle by regnr", FindVehicleByRegNr) },
+                { "D7",new MenuItem("Find vehicle (generic)", FindVehicle) },
+                { "D9",new MenuItem("Create some test-Vehicles", CreateTestVehicles) },
+                { "I",new MenuItem("Import some Vehicles", ImportVehicles) },
+                { "E",new MenuItem("Export some Vehicles", ExportVehicles) },
+                { "D0",new MenuItem("Exit the application", () => { Environment.Exit(0); }) }
+             };
+            foreach (var item in actionMeny)
+            {
+                var menuItem = (MenuItem)item.Value;
+                Console.WriteLine($"{item.Key.ToString().Replace("D","")}. {menuItem.Caption}");
+                if (GarageHandler.GarageMissing()) Console.ForegroundColor = System.ConsoleColor.DarkGray;
+            }
+            Console.ForegroundColor = System.ConsoleColor.White;
+            Console.Write("\r\nSelect an option: ");
+ 
+        var strMenu = Console.ReadKey(intercept: true).Key.ToString();
+            if (actionMeny.ContainsKey(strMenu)) actionMeny[strMenu].Act.Invoke();
             return true;
         }
 

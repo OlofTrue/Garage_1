@@ -22,29 +22,20 @@ namespace Garage_1
                      TypeP = prop.PropertyType.Name
                  })
                  .ToList();
-
-//{
-//    new Item{ Id=1, Name="Ball", Description="Hello" },
-//    new Item{ Id=2, Name="Hat", Description="Test" }
-//}
-
-//            AuthorList.Add(new Author("Mahesh Chand", 35, "A Prorammer's Guide to ADO.NET", true, new DateTime(2003, 7, 10)));
-
-//            foreach (var prop in this.GetType().GetProperties())
-//            {
-//                prop.Name;
-//                prop.PropertyType;
-//                //prop.GetValue(this, null);
-//            }
         }
 
+        public virtual Boolean Match(string strSearch)
+        {
+            if (strSearch == "")  return true;
+            return false;
+        }
 
         //[Display(Order = 1)]
         public string RegNr { get; set; }
         public string Color { get; set; }
         public virtual int NoWheels { get; set; }
         //public Boolean IsParked { get; }
-        public string Type => this.GetType().Name;
+        public string Type => this.GetType().Name; 
         public override string ToString()
         {
             var result = new StringBuilder();

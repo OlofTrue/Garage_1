@@ -12,12 +12,10 @@ namespace Garage_1
 
         public IEnumerator<T> GetEnumerator()
         {
-            if (vehicles != null)
+        if (vehicles != null)
+            foreach (var item in vehicles)
             {
-                foreach (var item in vehicles)
-                {
-                    if (item != null)  yield return item;
-                }
+                if (item != null)  yield return item;
             }
         }
 

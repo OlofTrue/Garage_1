@@ -67,7 +67,7 @@ namespace Garage_1
         {
             if (garage is null) return "";
             var result_list = garage
-                 .Where(v => v != null )
+                 //.Where(v => v != null )
                  .GroupBy(v => v.Type)
                  .Select(group => new { Type = group.Key,Count = group.Count() })
                  .ToList();

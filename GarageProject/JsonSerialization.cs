@@ -27,14 +27,15 @@ namespace Garage_1
         public static void WriteToJsonFile<T>(string filePath, T objectToWrite, bool append = false) where T : new()
         {
             TextWriter writer = null;
-            try
+            try 
             {
                 //var contentsToWriteToFile = JsonConvert.SerializeObject(objectToWrite); //Newtonsoft.Json.
                 string contentsToWriteToFile = JsonConvert.SerializeObject(objectToWrite, Formatting.Indented, new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto
                 });
-                writer = new StreamWriter(filePath, append);
+                
+                writer = new StreamWriter(filePath, append); //using () {}
                 writer.Write(contentsToWriteToFile);
             }
             finally
@@ -56,7 +57,7 @@ namespace Garage_1
             TextReader reader = null;
             try
             {
-                reader = new StreamReader(filePath);
+                reader = new StreamReader(filePath); //using () {}
                 var fileContents = reader.ReadToEnd();
                 //return JsonConvert.DeserializeObject<T>(fileContents); //Newtonsoft.Json.
                 return JsonConvert.DeserializeObject<T>(fileContents, new JsonSerializerSettings
