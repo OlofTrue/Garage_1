@@ -135,7 +135,7 @@ namespace Garage_1
             }
             else
             {
-                Util.MsgBox("Warning", "No new garage was created because you enter a negative capacity");
+                Util.MsgBox("Warning", "No new garage was not created because you enter a negative capacity");
             }
         }
 
