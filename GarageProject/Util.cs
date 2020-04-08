@@ -4,7 +4,6 @@ using System.Text;
 
 namespace Garage_1
 {
-
     public class Util
     {
         //#pragma warning disable IDE0059, IDE0060
@@ -33,11 +32,12 @@ namespace Garage_1
             Array.Clear(arr,a - 1,1);
         }
 
+
+        //ToDo new class UI
         public static float ConvFloat(string str)
         {
             if (!float.TryParse(str, out float val)) val = 0;
             return val;
-
         }
 
         public static int ConvInt(string str)
@@ -66,10 +66,5 @@ namespace Garage_1
         }
 
         internal static void PrintClear() => Console.Clear();
- 
-
-
-
-
     }
 }

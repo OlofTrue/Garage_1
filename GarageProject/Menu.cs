@@ -58,7 +58,7 @@ namespace Garage_1
             //    Util.MsgBox("Message", "Garage is missing");
             //    return;
             //}
-            var search = Util.Input("Enter all values to match( \"4,Red\" or \"NoWheels=4;Color=Red\" )\Please specify search string: ");
+            var search = Util.Input("Enter all values to match( \"4,Red\" or \"NoWheels=4;Color=Red\" )\nPlease specify search string: ");
             Util.MsgBox("Find vehicles by search string (" + search + ")", string.Format($"{GarageHandler.ListVehicleG(search)}"));
         }
 
@@ -92,15 +92,15 @@ namespace Garage_1
         }
         private static void PrintGarageStat() =>
             Util.MsgBox("Garage stat", GarageHandler.StatsVehiclesInGarage() + "\n\n" + GarageHandler.ListGarageCapacity());
-        static void PrintGarage()
-        {
-            //if (GarageHandler.GarageMissing())
-            //{
-            //    Util.MsgBox("Message", "Garage is missing");
-            //    return;
-            //}
-            Util.MsgBox("Garage inv", GarageHandler.ListVehicles());
-        }
+        static void PrintGarage() => Util.MsgBox("Garage inv", GarageHandler.ListVehicles());
+
+        //if (GarageHandler.GarageMissing())
+        //{
+        //    Util.MsgBox("Message", "Garage is missing");
+        //    return;
+        //}
+
+
         static void AddVehicle()
         {
             Util.PrintClear();
@@ -127,9 +127,16 @@ namespace Garage_1
         static void CreateGarage()
         {
             Util.PrintClear();
-            var cap = Util.ConvInt(Util.Input("Varning, all positive values will delete any existing garage. Please specify capacity of new garage: "));
-            if (cap>=0) GarageHandler.SetUpGarage(cap);
-            Util.MsgBox("New garage", string.Format($"{GarageHandler.ListVehicles()}\n\n{GarageHandler.ListGarageCapacity()}"));
+            var cap = Util.ConvInt(Util.Input("Warning, all positive values will delete any existing garage.\nPlease specify capacity of new garage: "));
+            if (cap >= 0)
+            {
+                GarageHandler.SetUpGarage(cap);
+                Util.MsgBox("New garage", string.Format($"{GarageHandler.ListVehicles()}\n\n{GarageHandler.ListGarageCapacity()}"));
+            }
+            else
+            {
+                Util.MsgBox("Warning", "No new garage was created because you enter a negative capacity");
+            }
         }
 
         static void CreateTestVehicles()
@@ -158,14 +165,12 @@ namespace Garage_1
 
         static void ExportVehicles()
         {
-            Util.PrintClear();
             //if (GarageHandler.GarageMissing())
             //{
             //    Util.MsgBox("Message", "Garage is missing");
             //    return;
             //}
             GarageHandler.Export();
-
             Util.MsgBox("Message", "Vehicles in garage exported");
         }
 
@@ -187,7 +192,8 @@ namespace Garage_1
             var vehicles = GarageHandler.Import();
             foreach (var v in vehicles)
             {
-                if (GarageHandler.AddVehicle(v, out var err)) cnt++;
+                //ToDo extra arg Func<string,string> Util.Input
+                if (GarageHandler.AddVehicle(v, out var err)) cnt++;  
                 else errLst += "\n" + err;
             }
             Util.MsgBox("Import", string.Format($"Succesfully imported {cnt} (of {vehicles.Count}) vehicles. {errLst}"));

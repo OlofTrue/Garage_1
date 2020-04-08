@@ -18,10 +18,9 @@ namespace Garage_1
                 if (item != null)  yield return item;
             }
         }
-
         IEnumerator IEnumerable.GetEnumerator() => this.GetEnumerator();
 
-        private T[] vehicles; //internal for testing
+        private T[] vehicles; //set internal for testing
         private int occupancy;
 
         public List(int cap)
@@ -45,7 +44,7 @@ namespace Garage_1
             vehicles[occupancy++] = vehicle;
             return true;
 
-            // Parking lots
+            //ToDo use Parking lots
             //for (int i = 0; i < Capacity; i++)
             //{
             //    if (vehicles[i] == null) //default
@@ -62,7 +61,9 @@ namespace Garage_1
             var inx = GetVehicle_Inx(regNr);
             if (inx >= 0)
             {
-                Util.RemoveAt(ref vehicles, inx); // vehicles[inx] = default;
+                //ToDo use Parking lots 
+                //vehicles[inx] = default;
+                Util.RemoveAt(ref vehicles, inx); 
                 occupancy--;
                 return true;
             }
