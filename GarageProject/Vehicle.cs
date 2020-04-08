@@ -5,16 +5,15 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
-using System.Reflection;
 
 namespace Garage_1
 {
     public abstract class Vehicle
     {
         public IList GetVehicleProperties()
-        {
+        {   //ToDo: fix hack that works whit any attribute! use Order
             return this.GetType().GetProperties()
-                 .OrderBy(p => (p.GetCustomAttributes(true).Length>0) ? 1 : 99) //ToDo hack works whit any attribute! fix Order
+                 .OrderBy(p => (p.GetCustomAttributes(true).Length>0) ? 1 : 99) 
                  .Select(prop => new
                  {
                      NameP = prop.Name,
