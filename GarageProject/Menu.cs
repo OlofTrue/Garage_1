@@ -127,7 +127,7 @@ namespace Garage_1
         static void CreateGarage()
         {
             Util.PrintClear();
-            var cap = Util.ConvInt(Util.Input("Warning, all positive values will delete any existing garage.\nPlease specify capacity of new garage: "));
+            var cap = Util.ConvInt(Util.Input((GarageHandler.GarageMissing() ? "" : "Warning, a positive values will delete any existing garage!\n") + "Please specify capacity of new garage: "));
             if (cap >= 0)
             {
                 GarageHandler.SetUpGarage(cap);
@@ -193,7 +193,7 @@ namespace Garage_1
             foreach (var v in vehicles)
             {
                 //ToDo extra arg Func<string,string> Util.Input
-                if (GarageHandler.AddVehicle(v, out var err)) cnt++;  
+                if (GarageHandler.AddVehicle(v, out var err)) cnt++;
                 else errLst += "\n" + err;
             }
             Util.MsgBox("Import", string.Format($"Succesfully imported {cnt} (of {vehicles.Count}) vehicles. {errLst}"));
