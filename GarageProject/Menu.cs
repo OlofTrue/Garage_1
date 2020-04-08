@@ -10,33 +10,39 @@ namespace Garage_1
     {
         internal struct MenuItem
         {
-            internal MenuItem(string caption, Action act) { Caption = caption; Act = act; }
+            internal MenuItem(string caption, Action act, Func<Boolean> disabled)
+            { Caption = caption; Act = act; Disabled = disabled; }
             internal readonly string Caption;
             internal readonly Action Act;
+            internal Func<bool> Disabled { get; }
+
         };
         internal static bool MainMenu()
         {
             Console.Clear();
             Console.WriteLine("Garage manager\n");
+            Func<Boolean> EmpyGarage =GarageHandler.GarageMissing;
+            Func<Boolean> FullGarage = GarageHandler.GarageIsFull;
             var actionMeny = new Dictionary<string, MenuItem>()
             {
-                { "D1",new MenuItem("New garage", CreateGarage) },
-                { "D2",new MenuItem("Examine garage", PrintGarage)},
-                { "D3",new MenuItem("Statistics garage", PrintGarageStat) },
-                { "D4",new MenuItem("Add vehicle", AddVehicle) },
-                { "D5",new MenuItem("Removevehicle", RemoveVehicle) },
-                { "D6",new MenuItem("Find vehicle by regnr", FindVehicleByRegNr) },
-                { "D7",new MenuItem("Find vehicle (generic)", FindVehicle) },
-                { "D8",new MenuItem("Create some test-vehicles", CreateTestVehicles) },
-                { "I",new MenuItem("Import garage", ImportVehicles) },
-                { "E",new MenuItem("Export garage", ExportVehicles) },
-                { "D0",new MenuItem("Exit the application", () => { Environment.Exit(0); }) }
+                { "D1",new MenuItem("New garage", CreateGarage, () =>false) },
+                { "D2",new MenuItem("Examine garage", PrintGarage, EmpyGarage)},
+                { "D3",new MenuItem("Statistics garage", PrintGarageStat, EmpyGarage) },
+                { "D4",new MenuItem("Add vehicle", AddVehicle, () => (EmpyGarage() || FullGarage())) },
+                { "D5",new MenuItem("Removevehicle", RemoveVehicle, EmpyGarage) },
+                { "D6",new MenuItem("Find vehicle by regnr", FindVehicleByRegNr, EmpyGarage) },
+                { "D7",new MenuItem("Find vehicle (generic)", FindVehicle, EmpyGarage) },
+                { "D8",new MenuItem("Try create some test-vehicles", CreateTestVehicles, () => (EmpyGarage() || FullGarage())) },
+                { "I",new MenuItem("Import garage", ImportVehicles, () => (EmpyGarage() || FullGarage())) },
+                { "E",new MenuItem("Export garage", ExportVehicles,EmpyGarage) },
+                { "D0",new MenuItem("Exit the application", () => { Environment.Exit(0); }, () =>false) }
              };
             foreach (var item in actionMeny)
             {
                 var menuItem = (MenuItem)item.Value;
+                Console.ForegroundColor = System.ConsoleColor.White;
+                if (item.Value.Disabled()) Console.ForegroundColor = System.ConsoleColor.DarkGray;
                 Console.WriteLine($"{item.Key.ToString().Replace("D", "")}. {menuItem.Caption}");
-                if (GarageHandler.GarageMissing()) Console.ForegroundColor = System.ConsoleColor.DarkGray;
             }
             Console.ForegroundColor = System.ConsoleColor.White;
             Console.Write("\r\nSelect an option: ");
