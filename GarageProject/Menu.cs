@@ -127,7 +127,7 @@ namespace Garage_1
         static void CreateGarage()
         {
             Util.PrintClear();
-            var cap = Util.ConvInt(Util.Input((GarageHandler.GarageMissing() ? "" : "Warning, a positive values will delete any existing garage!\n") + "Please specify capacity of new garage: "));
+            var cap = Util.ConvInt(Util.Input((GarageHandler.GarageMissing() ? "" : "Warning, a positive value will delete existing garage!\n") + "Please specify capacity of new garage: "));
             if (cap >= 0)
             {
                 GarageHandler.SetUpGarage(cap);
