@@ -14,22 +14,27 @@ namespace Garage_1
             {
                 case "airplane":
                 case "ai":
+                case "1":
                     vehicle = new Airplane();
                     break;
                 case "motorcycle":
                 case "mo":
+                case "2":
                     vehicle = new Motorcycle();
                     break;
                 case "car":
                 case "ca":
+                case "3":
                     vehicle = new Car();
                     break;
                 case "bus":
                 case "bu":
+                case "4":
                     vehicle = new Bus();
                     break;
                 case "boat":
                 case "bo":
+                case "5":
                     vehicle = new Boat();
                     break;
                 default:
@@ -43,22 +48,17 @@ namespace Garage_1
                     var nameP = (string)p?.GetType().GetProperty("NameP")?.GetValue(p, null);
                     if (nameP == "Type") continue;
                     var typeP = (string)p?.GetType().GetProperty("TypeP")?.GetValue(p, null);
-
-                    var label = string.Format($"Specify {nameP}: ");
-                    string strValue = Util.Input(label);
-
+                    var label = string.Format($"{nameP}: ");
+                    Util.PrintL(); //ToDo Func<> arg
+                    string strValue = Util.Input(label); //ToDo Func<> arg
                     var obj = vehicle;
                     PropertyInfo prop = obj.GetType().GetProperty(nameP, BindingFlags.Public | BindingFlags.Instance);
                     if (null != prop && prop.CanWrite)
-                    {
+                    { //.GetProperty(nameP).GetCustomAttribute<Display>();
                         if (typeP == "Int32") prop.SetValue(obj, Util.ConvInt(strValue), null);
                         if (typeP == "String") prop.SetValue(obj, strValue, null);
                         if (typeP == "Single") prop.SetValue(obj, Util.ConvFloat(strValue), null);
                         if (typeP == "Boolean") prop.SetValue(obj, (strValue == "true" || strValue == "1"), null);
-
-
-                        //.GetProperty(nameP).GetCustomAttribute<Display>();
-
                     }
                 }
             }

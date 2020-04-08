@@ -27,13 +27,14 @@ namespace Garage_1
                 // moving elements downwards, to fill the gap at [index]
                 arr[a] = arr[a + 1];
             }
-            //T t = (T)Activator.CreateInstance(typeof(T));
-            //arr[a - 1] = t;
+            //arr[a - 1] = default; // T t = (T)Activator.CreateInstance(typeof(T)); default(t); t;
             Array.Clear(arr,a - 1,1);
         }
 
 
-        //ToDo new class UI
+        //ToDo --------- new class UI ---------
+
+
         public static float ConvFloat(string str)
         {
             if (!float.TryParse(str, out float val)) val = 0;
@@ -66,5 +67,6 @@ namespace Garage_1
         }
 
         internal static void PrintClear() => Console.Clear();
+        internal static void PrintL() => Console.WriteLine();
     }
 }

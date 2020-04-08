@@ -78,7 +78,7 @@ namespace Garage_1
                  .GroupBy(v => v.Type)
                  .Select(group => new { Type = group.Key, Count = group.Count() })
                  .ToList();
-            return string.Join("\n", result_list);
+            return string.Join("\n", result_list) + ((result_list?.Count()>0) ? "\n\n" :  "");
         }
 
         private static readonly string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.json";

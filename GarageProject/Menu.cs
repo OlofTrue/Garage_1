@@ -91,7 +91,7 @@ namespace Garage_1
             Util.MsgBox("Vehicle removal", str);
         }
         private static void PrintGarageStat() =>
-            Util.MsgBox("Garage stat", GarageHandler.StatsVehiclesInGarage() + "\n\n" + GarageHandler.ListGarageCapacity());
+            Util.MsgBox("Garage stat", GarageHandler.StatsVehiclesInGarage()  + GarageHandler.ListGarageCapacity());
         static void PrintGarage() => Util.MsgBox("Garage inv", GarageHandler.ListVehicles());
 
         //if (GarageHandler.GarageMissing())
@@ -114,7 +114,7 @@ namespace Garage_1
             //    Util.MsgBox("Message", "Garage is full");
             //    return;
             //}
-            var type = Util.Input("Please specify type of Vehicle (ai,mo,ca,bu,bo): ");
+            var type = Util.Input("1. Airplane (ai)\n2. Motorcycle (mo)\n3. Car (ca)\n4. Bus (bu)\n5. Boat (bo)\n\nPlease specify type of Vehicle: ");
             Vehicle vehicle = VehicleHandler.BuildVehicle(type);
             string str;
             if (GarageHandler.AddVehicle(vehicle, out var errMsg))
@@ -127,11 +127,14 @@ namespace Garage_1
         static void CreateGarage()
         {
             Util.PrintClear();
-            var cap = Util.ConvInt(Util.Input((GarageHandler.GarageMissing() ? "" : "Warning, a positive value will delete existing garage!\n") + "Please specify capacity of new garage: "));
+            var cap = Util.ConvInt(Util.Input(
+                (GarageHandler.GarageMissing() ? ""
+                    : "Warning, a positive value will delete existing garage!\n")
+                + "Please specify capacity of new garage: "));
             if (cap >= 0)
             {
                 GarageHandler.SetUpGarage(cap);
-                Util.MsgBox("New garage", string.Format($"{GarageHandler.ListVehicles()}\n\n{GarageHandler.ListGarageCapacity()}"));
+                Util.MsgBox("New garage", string.Format($"{GarageHandler.ListGarageCapacity()}"));
             }
             else
             {
