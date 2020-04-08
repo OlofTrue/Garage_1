@@ -40,18 +40,33 @@ namespace Garage_1
 
         public Boolean AddVehicle(T vehicle)
         {
+            // Stack-like vehicle collection
             if (IsFull || vehicle == null) return false;
-            //vehicle.IsParked = true;
             vehicles[occupancy++] = vehicle;
             return true;
+
+            // Parking lots
+            //for (int i = 0; i < Capacity; i++)
+            //{
+            //    if (vehicles[i] == null) //default
+            //    {
+            //        vehicles[i] = vehicle;
+            //        occupancy++;
+            //        return true;
+            //    }
+            //}
+            //return false;
         }
         public Boolean RemoveVehicle(string regNr)
         {
-            if (occupancy == 0) return false;
-            int inx = GetVehicle_Inx(regNr);
-            Util.RemoveAt(ref vehicles, inx);
-            occupancy--;
-            return true;
+            var inx = GetVehicle_Inx(regNr);
+            if (inx >= 0)
+            {
+                Util.RemoveAt(ref vehicles, inx); // vehicles[inx] = default;
+                occupancy--;
+                return true;
+            }
+            return false;
         }
 
         public Vehicle GetVehicle(string regNr)
@@ -62,6 +77,7 @@ namespace Garage_1
 
         private int GetVehicle_Inx(string regNr)
         {
+            if (occupancy == 0) return -2; //superfluous
             int i;
             for (i = 0; i < vehicles.Length; i++)
             {

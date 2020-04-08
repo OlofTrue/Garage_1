@@ -61,7 +61,7 @@ namespace Garage_1
             Console.WriteLine();
             Console.WriteLine("------------ " + strCaption + " ------------");
             Console.WriteLine();
-            Console.WriteLine("Press any key to return: ");
+            Console.Write("Press \"Enter\" to return: ");
             Console.ReadLine();
         }
 

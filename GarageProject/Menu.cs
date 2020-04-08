@@ -28,12 +28,12 @@ namespace Garage_1
                 { "D2",new MenuItem("Examine garage", PrintGarage, EmpyGarage)},
                 { "D3",new MenuItem("Statistics garage", PrintGarageStat, EmpyGarage) },
                 { "D4",new MenuItem("Add vehicle", AddVehicle, () => (EmpyGarage() || FullGarage())) },
-                { "D5",new MenuItem("Removevehicle", RemoveVehicle, EmpyGarage) },
+                { "D5",new MenuItem("Remove vehicle", RemoveVehicle, EmpyGarage) },
                 { "D6",new MenuItem("Find vehicle by regnr", FindVehicleByRegNr, EmpyGarage) },
                 { "D7",new MenuItem("Search vehicles (generic)", FindVehicle, EmpyGarage) },
                 { "D8",new MenuItem("Try create some test-vehicles", CreateTestVehicles, () => (EmpyGarage() || FullGarage())) },
-                { "I",new MenuItem("Import garage", ImportVehicles, () => (EmpyGarage() || FullGarage())) },
-                { "E",new MenuItem("Export garage", ExportVehicles,EmpyGarage) },
+                { "I",new MenuItem("Import vehicles to garage", ImportVehicles, () => (EmpyGarage() || FullGarage())) },
+                { "E",new MenuItem("Export vehicles in garage", ExportVehicles,EmpyGarage) },
                 { "D0",new MenuItem("Exit the application", () => { Environment.Exit(0); }, () =>false) }
              };
             foreach (var item in actionMeny)
@@ -46,7 +46,7 @@ namespace Garage_1
             Console.ForegroundColor = System.ConsoleColor.White;
             Console.Write("\r\nSelect an option: ");
             var strMenu = Console.ReadKey(intercept: true).Key.ToString();
-            if (actionMeny.ContainsKey(strMenu)) actionMeny[strMenu].Act.Invoke();
+            if (actionMeny.ContainsKey(strMenu) && !actionMeny[strMenu].Disabled()) actionMeny[strMenu].Act.Invoke();
             return true;
         }
 
