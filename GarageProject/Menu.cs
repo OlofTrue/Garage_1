@@ -15,13 +15,12 @@ namespace Garage_1
             internal readonly string Caption;
             internal readonly Action Act;
             internal Func<bool> Disabled { get; }
-
         };
         internal static bool MainMenu()
         {
             Console.Clear();
             Console.WriteLine("Garage manager\n");
-            Func<Boolean> EmpyGarage =GarageHandler.GarageMissing;
+            Func<Boolean> EmpyGarage = GarageHandler.GarageMissing;
             Func<Boolean> FullGarage = GarageHandler.GarageIsFull;
             var actionMeny = new Dictionary<string, MenuItem>()
             {
@@ -31,7 +30,7 @@ namespace Garage_1
                 { "D4",new MenuItem("Add vehicle", AddVehicle, () => (EmpyGarage() || FullGarage())) },
                 { "D5",new MenuItem("Removevehicle", RemoveVehicle, EmpyGarage) },
                 { "D6",new MenuItem("Find vehicle by regnr", FindVehicleByRegNr, EmpyGarage) },
-                { "D7",new MenuItem("Find vehicle (generic)", FindVehicle, EmpyGarage) },
+                { "D7",new MenuItem("Search vehicles (generic)", FindVehicle, EmpyGarage) },
                 { "D8",new MenuItem("Try create some test-vehicles", CreateTestVehicles, () => (EmpyGarage() || FullGarage())) },
                 { "I",new MenuItem("Import garage", ImportVehicles, () => (EmpyGarage() || FullGarage())) },
                 { "E",new MenuItem("Export garage", ExportVehicles,EmpyGarage) },
