@@ -22,31 +22,28 @@ namespace Garage_1
                  .ToList();
         }
 
-        public Boolean Match(string strSearch)
+        public int MatchAll(string strSearch)
         {
-            Boolean anytMatch = false;
+            int cntMatch = 0;
+            Boolean fullProp = (strSearch.Contains("="));
             foreach (string item in this.ToString().Split(";"))
             {
                 foreach (var word in strSearch.Split(";"))
                 {
-                    if (item.Split("=")[1].ToLower().Trim() == word.ToLower().Trim())
-                    {
-                        anytMatch = true;
-                        break;
-                    }
-                    if (strSearch.Contains("="))
+                    if (fullProp)
                     {
                         if (item.ToLower().Replace(" ", "") == word.ToLower().Replace(" ", ""))
-                        {
-                            anytMatch = true;
-                            break;
-                        }
+                            cntMatch++;
+                    }
+                    else
+                    {
+                        if (item.Split("=")[1].ToLower().Trim() == word.ToLower().Trim())
+                            cntMatch++;
                     }
                 }
             }
-            return anytMatch;
+            return cntMatch;
         }
-        public virtual Boolean MatchAny(string strSearch) => this.Match(strSearch);
 
         //[Order(1)]
         //[DisplayName("Reg.nr")]
@@ -72,7 +69,7 @@ namespace Garage_1
     {
         public override int NoWheels { get; set; } = 2;
         public string FuelType { get; set; }
-        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
+ 
     }
 
     public class Motorcycle : Vehicle
@@ -80,14 +77,12 @@ namespace Garage_1
         public override int NoWheels { get; set; } = 2;
         public int CylinderVolume { get; set; }
         public string FuelType { get; set; }
-        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
 
     public class Car : Vehicle
     {
         public override int NoWheels { get; set; } = 4;
         public string FuelType { get; set; }
-        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
 
     public class Bus : Vehicle
@@ -95,7 +90,6 @@ namespace Garage_1
         public override int NoWheels { get; set; } = 4;
         public int NoSeats { get; set; }
         public string FuelType { get; set; }
-        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
 
     public class Boat : Vehicle
@@ -103,6 +97,5 @@ namespace Garage_1
         public override int NoWheels { get; set; } = 0;
         public int NoEngines { get; set; } = 1;
         public float Lenght { get; set; }
-        public override Boolean MatchAny(string strSearch) => this.Match(strSearch) || base.Match(strSearch);
     }
 }

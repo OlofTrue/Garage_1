@@ -62,9 +62,10 @@ namespace Garage_1
 
         internal static string ListVehicleG(string search)
         {
+            var noSearchKeys = search.Split(";").Length;
             if (garage is null) return "";
             var result_list = garage
-                 .Where(v => v.MatchAny(search) )
+                 .Where(v => (v.MatchAll(search) == noSearchKeys))
                  .ToList();
             return string.Join("\n", result_list);
         }

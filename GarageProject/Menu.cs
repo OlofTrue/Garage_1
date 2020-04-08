@@ -23,13 +23,13 @@ namespace Garage_1
                 { "D1",new MenuItem("New garage", CreateGarage) },
                 { "D2",new MenuItem("Examine garage", PrintGarage)},
                 { "D3",new MenuItem("Statistics garage", PrintGarageStat) },
-                { "D4",new MenuItem("Add Vehicle", AddVehicle) },
-                { "D5",new MenuItem("Remove Vehicle", RemoveVehicle) },
+                { "D4",new MenuItem("Add vehicle", AddVehicle) },
+                { "D5",new MenuItem("Removevehicle", RemoveVehicle) },
                 { "D6",new MenuItem("Find vehicle by regnr", FindVehicleByRegNr) },
-                { "D7",new MenuItem("Find vehicle (generic any match)", FindVehicle) },
-                { "D9",new MenuItem("Create some test-Vehicles", CreateTestVehicles) },
-                { "I",new MenuItem("Import some Vehicles", ImportVehicles) },
-                { "E",new MenuItem("Export some Vehicles", ExportVehicles) },
+                { "D7",new MenuItem("Find vehicle (generic)", FindVehicle) },
+                { "D8",new MenuItem("Create some test-vehicles", CreateTestVehicles) },
+                { "I",new MenuItem("Import garage", ImportVehicles) },
+                { "E",new MenuItem("Export garage", ExportVehicles) },
                 { "D0",new MenuItem("Exit the application", () => { Environment.Exit(0); }) }
              };
             foreach (var item in actionMeny)
@@ -53,8 +53,8 @@ namespace Garage_1
                 Util.MsgBox("Message", "Garage is missing");
                 return;
             }
-            var search = Util.Input("Specify search string ( any of \"4,Red\" or more specific any of  \"NoWheels=4;Color=Red\" ): ");
-            Util.MsgBox("Find vehicles by search string", string.Format($"{GarageHandler.ListVehicleG(search)}"));
+            var search = Util.Input("Enter all values to match( \"4,Red\" or \"NoWheels=4;Color=Red\" )\nSpecify search string: ");
+            Util.MsgBox("Find vehicles by search string (" + search + ")", string.Format($"{GarageHandler.ListVehicleG(search)}"));
         }
 
         private static void FindVehicleByRegNr()
