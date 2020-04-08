@@ -11,11 +11,10 @@ namespace GarageUnitTest
     {
         public Vehicle[] CreateVehicles(int n)
         {
-            var test_cars = GarageHandler.GetTestVehicles();
+            var test_cars = VehicleHandler.GetTestVehicles();
             Array.Resize(ref test_cars, n);
             return test_cars;
         }
-
 
         [TestMethod]
         [DataRow(3, 2)]

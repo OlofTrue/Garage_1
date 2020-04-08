@@ -84,14 +84,7 @@ namespace Garage_1
             return string.Join("\n", result_list);
         }
  
-        public static Vehicle[] GetTestVehicles()
-        {
-            return List<Vehicle>.TestVehicles();
-        }
-
         private static readonly string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.json";
-
-    
 
         internal static void Export()
         {

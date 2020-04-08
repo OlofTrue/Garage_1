@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Garage_1
 {
-    class VehicleHandler
+    public static class VehicleHandler
     {
         internal static Vehicle BuildVehicle(string type) //,string regNr
         {
@@ -65,5 +65,20 @@ namespace Garage_1
             return vehicle;
         }
 
+        public static Vehicle[] GetTestVehicles() => new Vehicle[]
+                    {
+                   new Car {RegNr="ABC11",Color="Red",NoWheels=4},
+                   new Car {RegNr="ABC222",Color="White",NoWheels=4},
+                   new Car {RegNr="ABC333",Color="Grey",NoWheels=4},
+                   new Car {RegNr="ABC444",Color="Grey",NoWheels=4},
+                   new Boat {RegNr="B-111",Color="Grey",NoWheels=0},
+                   new Boat {RegNr="B-222",Color="Blue",NoWheels=0},
+                   new Bus {RegNr="PPP999",Color="Grey",NoWheels=6},
+                   new Boat {RegNr="QQQ888",Color="Blue",NoWheels=4},
+                   new Motorcycle{RegNr="NNN444",Color="Black",NoWheels=2},
+                   new Motorcycle{RegNr="MMM555",Color="White",NoWheels=2},
+                   new Airplane{RegNr="AS-123-US",Color="Blue",NoWheels=8},
+                   new Airplane{RegNr="FF-003-US",Color="Blue",NoWheels=6}
+                      };
     }
 }

@@ -148,7 +148,7 @@ namespace Garage_1
 
             var cnt = 0;
             string errLst = "";
-            var vehicles = GarageHandler.GetTestVehicles();
+            var vehicles = VehicleHandler.GetTestVehicles();
             foreach (var v in vehicles)
             {
                 if (GarageHandler.AddVehicle(v, out var err)) cnt++;
