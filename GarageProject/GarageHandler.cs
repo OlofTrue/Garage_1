@@ -12,7 +12,7 @@ namespace Garage_1
         public static void SetUpGarage(int cap)
         {
             garage = null;
-            if (cap>0) garage = new List<Vehicle>(cap);
+            if (cap > 0) garage = new List<Vehicle>(cap);
         }
 
         public static List<Vehicle> GetGarageCopyForTest(int cap)
@@ -40,10 +40,8 @@ namespace Garage_1
         public static string ListVehicles(string regNr = "") =>
             (garage is null) ? "" :
                 string.Join("\n", garage
-                    .Where(item => (item is null) ? false :
-                        string.IsNullOrEmpty(regNr) ?
-                        true
-                        : item?.RegNr.ToLower() == regNr.ToLower() )
+                    .Where(item => string.IsNullOrEmpty(regNr) ? true
+                        : item?.RegNr.ToLower() == regNr.ToLower())
                     .ToList()
                     .Select(i => i.ToString()));
 
@@ -62,28 +60,27 @@ namespace Garage_1
 
         internal static string ListVehicleG(string search)
         {
-            var noSearchKeys = search.Split(";").Length;
+            var cntSearchKeys = search.Split(";").Length;
             if (garage is null) return "";
             var result_list = garage
-                 .Where(v => (v.MatchAll(search) == noSearchKeys))
+                 .Where(v => (v.MatchAll(search) == cntSearchKeys))
                  .ToList();
             return string.Join("\n", result_list);
         }
 
         public static Boolean GarageMissing() => (garage is null);
-        public static Boolean GarageIsFull() =>garage.IsFull;
+        public static Boolean GarageIsFull() => garage.IsFull;
 
         internal static string StatsVehiclesInGarage()
         {
             if (garage is null) return "";
-            var result_list = garage
-                 //.Where(v => v != null )
+            var result_list = garage    //.Where(v => v != null )
                  .GroupBy(v => v.Type)
-                 .Select(group => new { Type = group.Key,Count = group.Count() })
+                 .Select(group => new { Type = group.Key, Count = group.Count() })
                  .ToList();
             return string.Join("\n", result_list);
         }
- 
+
         private static readonly string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.json";
 
         internal static void Export()
@@ -92,10 +89,6 @@ namespace Garage_1
             JsonSerialization.WriteToJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile, garage.ToList());
         }
 
-        internal static System.Collections.Generic.List<Vehicle> Import() 
-        {
-            var vehicles = JsonSerialization.ReadFromJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile);
-            return vehicles;
-        }
+        internal static System.Collections.Generic.List<Vehicle> Import() => JsonSerialization.ReadFromJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile);
     }
 }
