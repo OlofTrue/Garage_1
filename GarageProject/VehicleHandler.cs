@@ -53,8 +53,8 @@ namespace Garage_1
                     string strValue = Util.Input(label); //ToDo Func<> arg
                     var obj = vehicle;
                     PropertyInfo prop = obj.GetType().GetProperty(nameP, BindingFlags.Public | BindingFlags.Instance);
-                    if (null != prop && prop.CanWrite)
-                    { //.GetProperty(nameP).GetCustomAttribute<Display>();
+                    if (null != prop && prop.CanWrite) //ToDo check prop.GetCustomAttribute for DisplayName
+                    {
                         if (typeP == "Int32") prop.SetValue(obj, Util.ConvInt(strValue), null);
                         if (typeP == "String") prop.SetValue(obj, strValue, null);
                         if (typeP == "Single") prop.SetValue(obj, Util.ConvFloat(strValue), null);

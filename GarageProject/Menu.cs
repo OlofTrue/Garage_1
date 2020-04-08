@@ -31,7 +31,7 @@ namespace Garage_1
                 { "D5",new MenuItem("Remove vehicle", RemoveVehicle, EmpyGarage) },
                 { "D6",new MenuItem("Find vehicle by regnr", FindVehicleByRegNr, EmpyGarage) },
                 { "D7",new MenuItem("Search vehicles (generic)", FindVehicle, EmpyGarage) },
-                { "D8",new MenuItem("Try create some test-vehicles", CreateTestVehicles, () => (EmpyGarage() || FullGarage())) },
+                { "D8",new MenuItem("Seed some test-vehicles", CreateTestVehicles, () => (EmpyGarage() || FullGarage())) },
                 { "I",new MenuItem("Import vehicles to garage", ImportVehicles, () => (EmpyGarage() || FullGarage())) },
                 { "E",new MenuItem("Export vehicles in garage", ExportVehicles,EmpyGarage) },
                 { "D0",new MenuItem("Exit the application", () => { Environment.Exit(0); }, () =>false) }

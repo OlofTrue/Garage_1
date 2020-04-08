@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
+using System.Reflection;
 
 namespace Garage_1
 {
@@ -12,14 +14,12 @@ namespace Garage_1
         public IList GetVehicleProperties()
         {
             return this.GetType().GetProperties()
+                 .OrderBy(p => (p.GetCustomAttributes(true).Length>0) ? 1 : 99) //ToDo hack works whit any attribute! fix Order
                  .Select(prop => new
                  {
                      NameP = prop.Name,
                      TypeP = prop.PropertyType.Name,
-                 })
-                 //.Where(p => p.GetCustomAttribute(typeof(Include)) != null)
-                 //.OrderBy(p => p.GetCustomAttribute(typeof(Order)) ?? 99)
-                 .ToList();
+                 }).ToList();
         }
 
         public int MatchAll(string strSearch)
@@ -45,9 +45,9 @@ namespace Garage_1
             return cntMatch;
         }
 
-        //[Order(1)]
-        //[DisplayName("Reg.nr")]
-        //[Unique=1]
+        //[Order(1)] ToDo namespace!
+        [DisplayName("Reg.nr")]
+        //[Unique=1]  
         public string RegNr { get; set; }
         public string Color { get; set; }
         public virtual int NoWheels { get; set; }
