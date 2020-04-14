@@ -6,7 +6,8 @@ using System.Runtime.CompilerServices;
 //[assembly: InternalsVisibleTo("UnitTestGarage")]
 namespace Garage_1
 {
-    public class List<T> : IEnumerable<T> where T : Vehicle
+
+    public class Garage<T> : IGarage<T> where T : Vehicle
     {
         public const int MAX_CAPACITY = 2500;
 
@@ -23,7 +24,7 @@ namespace Garage_1
         private T[] vehicles; //set internal for testing
         private int occupancy;
 
-        public List(int cap)
+        public Garage(int cap)
         {
             cap = Math.Min(Math.Max(cap, 1), MAX_CAPACITY);
             Capacity = cap;
@@ -70,7 +71,7 @@ namespace Garage_1
             return false;
         }
 
-        public Vehicle GetVehicle(string regNr)
+        public IVehicle GetVehicle(string regNr)
         {
             int inx = GetVehicle_Inx(regNr);
             return (inx >= 0 && inx < vehicles.Length) ? vehicles[inx] : null;

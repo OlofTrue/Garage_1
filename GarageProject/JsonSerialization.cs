@@ -29,13 +29,13 @@ namespace Garage_1
             TextWriter writer = null;
             try 
             {
-                //var contentsToWriteToFile = JsonConvert.SerializeObject(objectToWrite); //Newtonsoft.Json.
+                    //var contentsToWriteToFile = JsonConvert.SerializeObject(objectToWrite);
                 string contentsToWriteToFile = JsonConvert.SerializeObject(objectToWrite, Formatting.Indented, new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto
                 });
                 
-                writer = new StreamWriter(filePath, append); //using () {}
+                writer = new StreamWriter(filePath, append); //ToDo: using () {}
                 writer.Write(contentsToWriteToFile);
             }
             finally
@@ -57,9 +57,9 @@ namespace Garage_1
             TextReader reader = null;
             try
             {
-                reader = new StreamReader(filePath); //using () {}
+                reader = new StreamReader(filePath); ///ToDo: using () {}
                 var fileContents = reader.ReadToEnd();
-                //return JsonConvert.DeserializeObject<T>(fileContents); //Newtonsoft.Json.
+                    //return JsonConvert.DeserializeObject<T>(fileContents);
                 return JsonConvert.DeserializeObject<T>(fileContents, new JsonSerializerSettings
                 {
                     TypeNameHandling = TypeNameHandling.Auto

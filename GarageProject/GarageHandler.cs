@@ -5,31 +5,35 @@ using System.Linq;
 
 namespace Garage_1
 {
-    static public class GarageHandler
+    public static class GarageHandler
     {
-        private static List<Vehicle> garage;
+        private static Garage<Vehicle> garage;
 
         public static void SetUpGarage(int cap)
         {
-            garage = null;
-            if (cap > 0) garage = new List<Vehicle>(cap);
+            garage =null;
+            if (cap > 0)
+            {
+                garage = new Garage<Vehicle>(cap);
+            }
         }
 
-        public static List<Vehicle> GetGarageCopyForTest(int cap)
+        public static IGarage<Vehicle> GetGarageCopyForTest(int cap)
         {
             SetUpGarage(cap);
-            return garage;
+            return (IGarage<Vehicle>)garage;
         }
 
-        public static bool AddVehicle(Vehicle vehicle, out string errMsg)
+        public static bool AddVehicle(IVehicle vehicle, out string errMsg)
         {
             errMsg = "";
             var success = false;
             if (garage?.GetVehicle(vehicle?.RegNr) == null)
-                success = garage?.AddVehicle(vehicle) ?? false;
+                success = garage?.AddVehicle((Vehicle)vehicle) ?? false;
             else
-                errMsg = "Reg.nr already exists";
+                errMsg = string.Format($"Reg.nr {vehicle?.RegNr} already exists");
             return success;
+            
         }
 
         public static Boolean RemoveVehicle(string regNr)
@@ -49,7 +53,7 @@ namespace Garage_1
         {
             return "Occupancy: " + (garage?.Occupancy ?? 0).ToString()
                 + "\n\nCapacity: " + (garage?.Capacity ?? 0).ToString()
-                + "\n\nMaxcapacity: " + List<Vehicle>.MAX_CAPACITY.ToString();
+                + "\n\nMaxcapacity: " + Garage<Vehicle>.MAX_CAPACITY.ToString();
         }
 
         public static string ListVehicle(string search)
@@ -82,13 +86,9 @@ namespace Garage_1
         }
 
         private static readonly string jsonFile = System.AppDomain.CurrentDomain.BaseDirectory + "garage.json";
+        //System.IO.File.Delete(jsonFile);
+        internal static void Export() =>JsonSerialization.WriteToJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile, garage.ToList());
 
-        internal static void Export()
-        {
-            System.IO.File.Delete(jsonFile);
-            JsonSerialization.WriteToJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile, garage.ToList());
-        }
-
-        internal static System.Collections.Generic.List<Vehicle> Import() => JsonSerialization.ReadFromJsonFile<System.Collections.Generic.List<Vehicle>>(jsonFile);
+        internal static System.Collections.Generic.List<IVehicle> Import() => JsonSerialization.ReadFromJsonFile<System.Collections.Generic.List<IVehicle>>(jsonFile);
     }
 }

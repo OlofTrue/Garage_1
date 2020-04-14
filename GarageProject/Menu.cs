@@ -114,10 +114,11 @@ namespace Garage_1
             //    Util.MsgBox("Message", "Garage is full");
             //    return;
             //}
+            string errMsg="";
             var type = Util.Input("1. Airplane (ai)\n2. Motorcycle (mo)\n3. Car (ca)\n4. Bus (bu)\n5. Boat (bo)\n\nPlease specify type of Vehicle: ");
-            Vehicle vehicle = VehicleHandler.BuildVehicle(type);
+            Vehicle vehicle = (Vehicle)VehicleHandler.BuildVehicle(type,out  errMsg);
             string str;
-            if (GarageHandler.AddVehicle(vehicle, out var errMsg))
+            if (errMsg=="" && GarageHandler.AddVehicle(vehicle, out  errMsg))
                 str = string.Format($"Adding vehicle was succesfull");
             else
                 str = string.Format($"Sorry, adding of vehicle faild. {errMsg}");

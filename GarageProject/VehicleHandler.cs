@@ -7,8 +7,9 @@ namespace Garage_1
 {
     public static class VehicleHandler
     {
-        internal static Vehicle BuildVehicle(string type) //,string regNr
+        internal static IVehicle BuildVehicle(string type,out string txtErr) //,string regNr
         {
+            txtErr = "";
             Vehicle vehicle = null;
             switch (type.ToLower())
             {
@@ -51,6 +52,12 @@ namespace Garage_1
                     var label = string.Format($"{nameP}: ");
                     Util.PrintL(); //ToDo Func<> arg
                     string strValue = Util.Input(label); //ToDo Func<> arg
+                    if (nameP=="RegNr") //ToDo; unique
+                        if (GarageHandler.ListVehicles(strValue).Length>0)
+                        {
+                            txtErr = "Vehicle already exists.";
+                            return null;
+                        }
                     var obj = vehicle;
                     PropertyInfo prop = obj.GetType().GetProperty(nameP, BindingFlags.Public | BindingFlags.Instance);
                     if (null != prop && prop.CanWrite) //ToDo check prop.GetCustomAttribute for DisplayName

@@ -2,18 +2,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 
 namespace Garage_1
 {
-    public abstract class Vehicle
+    public abstract class Vehicle : IVehicle
     {
         public IList GetVehicleProperties()
         {   //ToDo: fix hack that works whit any attribute! use Order
             return this.GetType().GetProperties()
-                 .OrderBy(p => (p.GetCustomAttributes(true).Length>0) ? 1 : 99) 
+                 .OrderBy(p => (p.GetCustomAttributes(true).Length > 0) ? 1 : 99)
                  .Select(prop => new
                  {
                      NameP = prop.Name,
@@ -46,7 +45,7 @@ namespace Garage_1
 
         //[Order(1)] ToDo namespace!
         [DisplayName("Reg.nr")]
-        //[Unique=1]  
+        //[Unique]  
         public string RegNr { get; set; }
         public string Color { get; set; }
         public virtual int NoWheels { get; set; }
